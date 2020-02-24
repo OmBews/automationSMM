@@ -9,6 +9,18 @@ const TeamMemberSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  firstImage: {
+    type: String
+  },
+  secondImage: {
+    type: String
+  },
+  thirdImage: {
+    type: String
+  },
+  followers: {
+    type: String
   }
 });
 

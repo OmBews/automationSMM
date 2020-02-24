@@ -12,7 +12,7 @@ function SignIn() {
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user != null) {
-        // setRedirect(true);
+        setRedirect(true);
         setUserStatus(user);
       } else setUserStatus(null);
     });

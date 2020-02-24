@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Comment = require("../../models/teamMember");
+const Comment = require("../../models/comment");
 
 router.get("/", (req, res) => {
   Comment.find()
@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.delete("/:id", (req, res) => {
+router.post("/:id", (req, res) => {
   Comment.findOneAndDelete({ _id: req.params.id })
     .then(resp => res.json(resp))
     .catch(resp => res.json(resp));
