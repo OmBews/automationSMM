@@ -21,6 +21,10 @@ const TeamMemberSchema = new Schema({
   },
   followers: {
     type: String
+  },
+  limitCounter: {
+    type: Number,
+    default: 0
   }
 });
 

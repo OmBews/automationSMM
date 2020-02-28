@@ -30,11 +30,12 @@ router.post("/:id", (req, res) => {
 });
 
 router.post("/:id/update", (req, res) => {
-  TeamMember.update({ _id: req.params.id },
+  TeamMember.updateOne({ _id: req.params.id },
     {$set: { "firstImage" : req.body.first,
             "secondImage": req.body.second,
             "thirdImage": req.body.third,
-            "followers": req.body.followers  
+            "followers": req.body.followers,
+            "limitCounter": req.body.limitCounter  
   
   }})
     .then(resp => res.json(resp))
