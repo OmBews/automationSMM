@@ -3,6 +3,8 @@ import { auth } from "../firebase";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
+let countForUseEffect = 1;
+
 function Home() {
   const [userStatus, setUserStatus] = useState(null);
   const [redirect, setRedirect] = useState(false);
@@ -17,10 +19,14 @@ function Home() {
   const [foll, setFoll] = useState(0);
   const [loadingGo, setLoadingGo] = useState(false);
   const [err, setErr] = useState(false);
+  
+ 
 
   useEffect(() => {
     fetch();
-
+    if(countForUseEffect)
+      followizFetch();
+    countForUseEffect = 0;
     auth.onAuthStateChanged(user => {
       if (user == null) {
         setRedirect(true);
@@ -28,6 +34,8 @@ function Home() {
       } else setUserStatus(user);
     });
   }, [userStatus]);
+
+
 
   async function fetch() {
     await axios
@@ -44,6 +52,12 @@ function Home() {
         setComments(res.data);
       })
       .catch(err => console.log(err));
+  }
+
+  async function followizFetch(){
+    await axios.post('http://localhost:5000/api/scrape')
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
   }
 
   const handleLogout = e => {
@@ -305,9 +319,25 @@ function Home() {
                 </form>
               </div>
             </div>
+            {/* Instagram -  Followers [Not Guaranteed/No Refill] */}
 
-            {/* <button onClick={handleLogout} className="btn btn-info">logout</button> */}
           </div>
+          {/* <button onClick={handleLogout} className="btn btn-info mt-3">logout</button> */}
+          {/* <div className="container">
+            <div className="row">
+              <div className="col col-lg-4">
+                <h3>Followiz</h3>
+                             
+              </div>
+              <div className="col col-lg-4">
+              <h3>Payto</h3>
+                </div>
+                <div className="col col-lg-4">
+              <h3>SMM</h3>
+                
+                </div>
+            </div>
+          </div> */}
         </>
       )}
     </>
