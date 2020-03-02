@@ -19,13 +19,23 @@ function Home() {
   const [foll, setFoll] = useState(0);
   const [loadingGo, setLoadingGo] = useState(false);
   const [err, setErr] = useState(false);
+  const [initialFetch, setInitialFetch] = useState(null);
+  const [followizFollowers, setFollowizFollowers] = useState(null);
+  const [followizLikes, setFollowizLikes] = useState(null);
+  const [followizComments, setFollowizComments] = useState(null);
+  const [PaytoFollowers, setPaytoFollowers] = useState(null);
+  const [PaytoLikes, setPaytoLikes] = useState(null);
+  const [PaytoComments, setPaytoComments] = useState(null);
+  const [SMMFollowers, setSMMFollowers] = useState(null);
+  const [SMMLikes, setSMMLikes] = useState(null);
+  const [SMMComments, setSMMComments] = useState(null);
+  const [secondErr, setSecondErr] = useState(false);
   
- 
 
   useEffect(() => {
     fetch();
     if(countForUseEffect)
-      followizFetch();
+      initFetch();
     countForUseEffect = 0;
     auth.onAuthStateChanged(user => {
       if (user == null) {
@@ -39,7 +49,7 @@ function Home() {
 
   async function fetch() {
     await axios
-      .get("http://localhost:5000/api/teammembers")
+      .get("http://128.199.77.47:5000/api/teammembers")
       .then(res => {
         setTeammembers(res.data);
         console.log("team" + res.data);
@@ -47,16 +57,18 @@ function Home() {
       .catch(err => console.log(err));
 
     await axios
-      .get("http://localhost:5000/api/comments")
+      .get("http://128.199.77.47:5000/api/comments")
       .then(res => {
         setComments(res.data);
       })
       .catch(err => console.log(err));
   }
 
-  async function followizFetch(){
-    await axios.post('http://localhost:5000/api/scrape')
-    .then(res => console.log(res))
+  async function initFetch(){
+    await axios.post('http://128.199.77.47:5000/api/scrape')
+    .then(res => {
+      setInitialFetch(res.data)
+    })
     .catch(err => console.log(err));
   }
 
@@ -81,13 +93,13 @@ function Home() {
       url: url
     };
     axios
-      .post("http://localhost:5000/api/teammembers", obj)
+      .post("http://128.199.77.47:5000/api/teammembers", obj)
       .then(res => {
         setSuccessURL(true);
         setLoading(false);
 
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://128.199.77.47:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
             console.log("team" + res.data);
@@ -108,12 +120,12 @@ function Home() {
       comment: comment
     };
     axios
-      .post("http://localhost:5000/api/comments", obj)
+      .post("http://128.199.77.47:5000/api/comments", obj)
       .then(res => {
         setSuccessComment(true);
         setLoadingComment(false);
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://128.199.77.47:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -127,10 +139,10 @@ function Home() {
 
   const handleDeleteComment = item => {
     axios
-      .post(`http://localhost:5000/api/comments/${item._id}`)
+      .post(`http://128.199.77.47:5000/api/comments/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://128.199.77.47:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -141,10 +153,10 @@ function Home() {
 
   const handleDeleteMember = item => {
     axios
-      .post(`http://localhost:5000/api/teammembers/${item._id}`)
+      .post(`http://128.199.77.47:5000/api/teammembers/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://128.199.77.47:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
           })
@@ -156,12 +168,36 @@ function Home() {
   const StartingEngine = e => {
     e.preventDefault();
     if (foll < 100) setErr(true);
+    else if(followizFollowers == null || followizComments == null || followizLikes == null || PaytoComments == null || PaytoFollowers == null || PaytoLikes == null || SMMComments == null || SMMFollowers == null || SMMLikes == null)
+    setSecondErr(true)
     else {
+
+      const followiz = {
+        followers: followizFollowers,
+        comments: followizComments,
+        likes: followizLikes
+      }
+
+      const payto = {
+        followers: PaytoFollowers,
+        comments: PaytoComments,
+        likes: PaytoLikes
+      }
+
+      const SMM = {
+        followers: SMMFollowers,
+        comments: SMMComments,
+        likes: SMMLikes
+      }
+
       const obj = {
-        followers: foll
+        followers: foll,
+        followiz,
+        payto,
+        SMM
       };
       axios
-        .post("http://localhost:5000/api/start", obj)
+        .post("http://128.199.77.47:5000/api/start", obj)
         .then(res => {})
         .catch(err => console.log(err));
       setLoadingGo(true);
@@ -173,6 +209,62 @@ function Home() {
     setErr(false);
     setFoll(e.target.value);
   };
+
+
+  const handleFollowizFollowers = e => {
+    e.preventDefault();
+    setFollowizFollowers(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handleFollowizLikes = e => {
+    e.preventDefault();
+    setFollowizLikes(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handleFollowizComments = e => {
+    e.preventDefault();
+    setFollowizComments(e.target.value);
+    console.log(e.target.value)
+  }
+
+ 
+  const handlePaytoFollowers = e => {
+    e.preventDefault();
+    setPaytoFollowers(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handlePaytoLikes = e => {
+    e.preventDefault();
+    setPaytoLikes(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handlePaytoComments = e => {
+    e.preventDefault();
+    setPaytoComments(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handleSMMFollowers = e => {
+    e.preventDefault();
+    setSMMFollowers(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handleSMMLikes = e => {
+    e.preventDefault();
+    setSMMLikes(e.target.value);
+    console.log(e.target.value)
+  }
+
+  const handleSMMComments = e => {
+    e.preventDefault();
+    setSMMComments(e.target.value);
+    console.log(e.target.value)
+  }
 
   return (
     <>
@@ -317,6 +409,8 @@ function Home() {
                     )}
                   </button>
                 </form>
+                <br />
+                {secondErr ? <div className="alert alert-danger">Please fill out the below fields</div>:<></>}
               </div>
             </div>
             {/* Instagram -  Followers [Not Guaranteed/No Refill] */}
@@ -338,6 +432,118 @@ function Home() {
                 </div>
             </div>
           </div> */}
+          <hr />
+          {initialFetch == null ? <>
+          <div className="alert alert-info">Loading the latest prices.. Please wait for 40-45 seconds.
+            </div></>:<>
+            <div className="container pt-5 mt-5 pb-5 mb-5">
+            <div className="row">
+          <div className="col col-lg-4">
+            <h1>Followiz</h1>
+            <div class="form-group">
+    <label for="exampleFormControlSelect1">Followers</label>
+    <select onChange={handleFollowizFollowers} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.followizFollowersArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    
+    </select>
+    <label for="exampleFormControlSelect1">Comments</label>
+
+    <select onChange={handleFollowizComments} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.followizCommentsArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+    <label for="exampleFormControlSelect1">Likes</label>
+
+    <select onChange={handleFollowizLikes} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.followizLikesArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+  </div>
+          </div>
+          <div className="col col-lg-4">
+            <h1>Payto</h1>
+    <label for="exampleFormControlSelect1">Followers</label>
+
+            <select onChange={handlePaytoFollowers} class="form-control" id="exampleFormControlSelect1">
+            {initialFetch.paytoFollowersArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+    <label for="exampleFormControlSelect1">Comments</label>
+
+    <select onChange={handlePaytoComments} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.paytoCommentsArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+    <label for="exampleFormControlSelect1">Likes</label>
+
+    <select onChange={handlePaytoLikes} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.paytoLikesArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+          </div>
+          <div className="col col-lg-4">
+            <h1>SMM</h1>
+    <label for="exampleFormControlSelect1">Followers</label>
+
+            <select onChange={handleSMMFollowers} class="form-control" id="exampleFormControlSelect1">
+            {initialFetch.SMMFollowersArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+    <label for="exampleFormControlSelect1">Comments</label>
+
+    <select onChange={handleSMMComments} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.SMMCommentsArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+    <label for="exampleFormControlSelect1">Likes</label>
+
+    <select onChange={handleSMMLikes} class="form-control" id="exampleFormControlSelect1">
+    {initialFetch.SMMLikesArray.map(item => {
+      return(
+        <option value={item}>{item}</option>
+
+      );
+    })}
+    </select>
+          </div>
+          </div>
+          </div>
+       
+            </>}
+         
         </>
       )}
     </>
