@@ -43,7 +43,7 @@ app.post("/api/scrape", async (req, responser) => {
   const options = new chrome.Options();
   options.addArguments("--disable-dev-shm-usage");
   options.addArguments("--no-sandbox");
-  // options.addArguments("--headless");
+  options.addArguments("--headless");
 
   const driverT = new Builder()
     .forBrowser("chrome")
@@ -530,7 +530,7 @@ app.post("/api/start", async (req, res) => {
   const options = new chrome.Options();
   options.addArguments("--disable-dev-shm-usage");
   options.addArguments("--no-sandbox");
-  // options.addArguments("--headless");
+  options.addArguments("--headless");
 
   const driver = new Builder()
     .forBrowser("chrome")
