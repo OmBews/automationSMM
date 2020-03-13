@@ -51,7 +51,7 @@ function Home() {
 
   async function fetch() {
     await axios
-      .get("http://localhost:5000/api/teammembers")
+      .get("http://193.46.199.129:5000/api/teammembers")
       .then(res => {
         setTeammembers(res.data);
         console.log("team" + res.data);
@@ -59,7 +59,7 @@ function Home() {
       .catch(err => console.log(err));
 
     await axios
-      .get("http://localhost:5000/api/comments")
+      .get("http://193.46.199.129:5000/api/comments")
       .then(res => {
         setComments(res.data);
       })
@@ -67,7 +67,7 @@ function Home() {
   }
 
   async function initFetch(){
-    await axios.post('http://localhost:5000/api/scrape')
+    await axios.post('http://193.46.199.129:5000/api/scrape')
     .then(res => {
       setInitialFetch(res.data)
     })
@@ -95,13 +95,13 @@ function Home() {
       url: url
     };
     axios
-      .post("http://localhost:5000/api/teammembers", obj)
+      .post("http://193.46.199.129:5000/api/teammembers", obj)
       .then(res => {
         setSuccessURL(true);
         setLoading(false);
 
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://193.46.199.129:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
             console.log("team" + res.data);
@@ -122,12 +122,12 @@ function Home() {
       comment: comment
     };
     axios
-      .post("http://localhost:5000/api/comments", obj)
+      .post("http://193.46.199.129:5000/api/comments", obj)
       .then(res => {
         setSuccessComment(true);
         setLoadingComment(false);
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://193.46.199.129:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -141,10 +141,10 @@ function Home() {
 
   const handleDeleteComment = item => {
     axios
-      .post(`http://localhost:5000/api/comments/${item._id}`)
+      .post(`http://193.46.199.129:5000/api/comments/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://193.46.199.129:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -155,10 +155,10 @@ function Home() {
 
   const handleDeleteMember = item => {
     axios
-      .post(`http://localhost:5000/api/teammembers/${item._id}`)
+      .post(`http://193.46.199.129:5000/api/teammembers/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://193.46.199.129:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
           })
@@ -204,7 +204,7 @@ function Home() {
         SMM
       };
       axios
-        .post("http://localhost:5000/api/start", obj)
+        .post("http://193.46.199.129:5000/api/start", obj)
         .then(res => {})
         .catch(err => console.log(err));
         setLoadingGo(true);
