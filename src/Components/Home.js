@@ -39,12 +39,12 @@ function Home() {
     if(countForUseEffect)
       initFetch();
     countForUseEffect = 0;
-    auth.onAuthStateChanged(user => {
-      if (user == null) {
-        setRedirect(true);
-        setUserStatus(user);
-      } else setUserStatus(user);
-    });
+    // auth.onAuthStateChanged(user => {
+    //   if (user == null) {
+    //     setRedirect(true);
+    //     setUserStatus(user);
+    //   } else setUserStatus(user);
+    // });
   }, [userStatus]);
 
 
