@@ -645,7 +645,7 @@ app.post("/api/start", async (req, res) => {
 
   // getting the array of teammembers
   axios
-    .get("http://193.46.199.129:5000/api/teammembers")
+    .get("http://localhost:5000/api/teammembers")
     .then(async resp => {
       teamMembers = resp.data;
 
@@ -677,13 +677,13 @@ app.post("/api/start", async (req, res) => {
                 console.log("username" + teamMembers[counter].url);
                 await axios
                   .post(
-                    `http://193.46.199.129:5000/api/teammembers/${teamMembers[counter]._id}/update`,
+                    `http://localhost:5000/api/teammembers/${teamMembers[counter]._id}/update`,
                     obj
                   )
                   .then(res => {
                     counter++;
                     axios
-                      .get("http://193.46.199.129:5000/api/teammembers")
+                      .get("http://localhost:5000/api/teammembers")
                       .then(resp => {
                         teamMembers = resp.data;
                         if (counter < teamMembers.length) initialFollowers();
@@ -1010,7 +1010,7 @@ app.post("/api/start", async (req, res) => {
 
   // ////////////////////////////////////Comments BLOCK//////////////////////////////////////
 
-  axios.get("http://193.46.199.129:5000/api/comments").then(res => {
+  axios.get("http://localhost:5000/api/comments").then(res => {
     comments = res.data;
 
     // delay function
@@ -1024,7 +1024,7 @@ app.post("/api/start", async (req, res) => {
       console.log("running");
       let automationArray = [];
       axios
-        .get("http://193.46.199.129:5000/api/teammembers")
+        .get("http://localhost:5000/api/teammembers")
         .then(async res => {
           teamMembers = res.data;
           for (let count = 0; count < teamMembers.length; count++) {
@@ -1063,7 +1063,7 @@ app.post("/api/start", async (req, res) => {
 
                 await axios
                   .post(
-                    `http://193.46.199.129:5000/api/teammembers/${teamMembers[count]._id}/update`,
+                    `http://localhost:5000/api/teammembers/${teamMembers[count]._id}/update`,
                     obj
                   )
                   .catch(err => console.log(err));
@@ -1079,8 +1079,8 @@ app.post("/api/start", async (req, res) => {
                 function likesLoop() {
                   setTimeout(function() {
                     likesFollowiz(automationArray[instance]);
-                    // likesPayto(automationArray[instance]);
-                    // likesSMM(automationArray[instance]);
+                    likesPayto(automationArray[instance]);
+                    likesSMM(automationArray[instance]);
                     instance++;
 
                     if (instance < automationArray.length) {
