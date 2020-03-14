@@ -179,7 +179,7 @@ app.post("/api/scrape", async (req, responser) => {
                                             setTimeout(() => {
                                               driverT.quit();
                                               
-                                            }, 15000);
+                                            }, 30000);
                                       
                                      
                                           }, 2000);
@@ -331,7 +331,7 @@ app.post("/api/scrape", async (req, responser) => {
                                                   setTimeout(() => {
                                                     driverSMMT.quit();
                                                     
-                                                  }, 15000)
+                                                  }, 30000)
                                                 }, 2000);
                                               })
                                               .catch(err => console.log(err));
@@ -479,7 +479,7 @@ app.post("/api/scrape", async (req, responser) => {
                                     setTimeout(() => {
                                       driverPaytoT.quit();
                                       
-                                    }, 15000)
+                                    }, 30000)
                                       }, 2000);
                                     })
                                     .catch(err => console.log(err));
