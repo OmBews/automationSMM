@@ -175,12 +175,13 @@ app.post("/api/scrape", async (req, responser) => {
                                             }
                                             console.log(followizCommentsArray);
                                             
-                                            driverT
-                                        .sleep(15000)
-                                        .then(() => {
-                                          driverT.quit();
-                                        })
-                                        .catch(err => console.log(err));
+                                       
+                                            setTimeout(() => {
+                                              driverT.quit();
+                                              
+                                            }, 15000);
+                                      
+                                     
                                           }, 2000);
                                         })
                                         .catch(err => console.log(err));
@@ -327,12 +328,10 @@ app.post("/api/scrape", async (req, responser) => {
                                                       ddl.options[i].text;
                                                   }
                                                   console.log(SMMCommentsArray);
-                                                  driverSMMT
-                                              .sleep(15000)
-                                              .then(() => {
-                                                driverSMMT.quit();
-                                              })
-                                              .catch(err => console.log(err));
+                                                  setTimeout(() => {
+                                                    driverSMMT.quit();
+                                                    
+                                                  }, 15000)
                                                 }, 2000);
                                               })
                                               .catch(err => console.log(err));
@@ -471,12 +470,16 @@ app.post("/api/scrape", async (req, responser) => {
                                         }
                                         console.log(paytoCommentsArray);
                                        
-                                        driverPaytoT
-                                    .sleep(15000)
-                                    .then(() => {
+                                    //     driverPaytoT
+                                    // .sleep(15000)
+                                    // .then(() => {
+                                    //   driverPaytoT.quit();
+                                    // })
+                                    // .catch(err => console.log(err));
+                                    setTimeout(() => {
                                       driverPaytoT.quit();
-                                    })
-                                    .catch(err => console.log(err));
+                                      
+                                    }, 15000)
                                       }, 2000);
                                     })
                                     .catch(err => console.log(err));
