@@ -645,7 +645,7 @@ app.post("/api/start", async (req, res) => {
 
   // getting the array of teammembers
   axios
-    .get("http://193.46.199.129:5000/api/teammembers")
+    .get("http://localhost:5000/api/teammembers")
     .then(async resp => {
       teamMembers = resp.data;
 
@@ -677,13 +677,13 @@ app.post("/api/start", async (req, res) => {
                 console.log("username" + teamMembers[counter].url);
                 await axios
                   .post(
-                    `http://193.46.199.129:5000/api/teammembers/${teamMembers[counter]._id}/update`,
+                    `http://localhost:5000/api/teammembers/${teamMembers[counter]._id}/update`,
                     obj
                   )
                   .then(res => {
                     counter++;
                     axios
-                      .get("http://193.46.199.129:5000/api/teammembers")
+                      .get("http://localhost:5000/api/teammembers")
                       .then(resp => {
                         teamMembers = resp.data;
                         if (counter < teamMembers.length) initialFollowers();
@@ -1010,7 +1010,7 @@ app.post("/api/start", async (req, res) => {
 
   // ////////////////////////////////////Comments BLOCK//////////////////////////////////////
 
-  axios.get("http://193.46.199.129:5000/api/comments").then(res => {
+  axios.get("http://localhost:5000/api/comments").then(res => {
     comments = res.data;
 
     // delay function
@@ -1024,7 +1024,7 @@ app.post("/api/start", async (req, res) => {
       console.log("running");
       let automationArray = [];
       axios
-        .get("http://193.46.199.129:5000/api/teammembers")
+        .get("http://localhost:5000/api/teammembers")
         .then(async res => {
           teamMembers = res.data;
           for (let count = 0; count < teamMembers.length; count++) {
@@ -1063,7 +1063,7 @@ app.post("/api/start", async (req, res) => {
 
                 await axios
                   .post(
-                    `http://193.46.199.129:5000/api/teammembers/${teamMembers[count]._id}/update`,
+                    `http://localhost:5000/api/teammembers/${teamMembers[count]._id}/update`,
                     obj
                   )
                   .catch(err => console.log(err));
@@ -1541,6 +1541,84 @@ app.post("/api/start", async (req, res) => {
 
   // ////////////////////////ticketing end////////////////////////////////////
 });
+
+
+app.post('/fetch', (req, res) => {
+  let followizz;
+  let paytoz;
+  let indianSmartz;
+  let SMMz;
+  axios.post('https://followiz.com/api/v2', {
+
+    key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
+    action: "services"
+
+}).then(resp => { 
+  console.log(resp.data)
+  followizz = resp.data;
+  
+  axios.post('https://paytosmm.com/api/v2', {
+
+    key: "b825403d29ef9f7b4e20389a37bfc17a",
+    action: "services"
+
+      }).then(resp => { 
+      console.log(resp.data)
+      paytoz = resp.data;
+
+      axios.post('https://smmfollows.com/api/v2', {
+
+        key: "f009489187f3dce80207c2c5ee2d47fc",
+        action: "services"
+      
+          }).then(resp => { 
+          console.log(resp.data)
+          SMMz= resp.data;
+
+
+          axios.post('https://indiansmartpanel.com/api/v2', {
+
+            api_token: "$2y$10$KgbapTBSR8oM7myoeZpP9eXrDXoXEzmmeWxaGdGIknu3mo1haJZLu",
+            action: "packages"
+          
+          }).then(resp => { 
+          console.log(resp.data)
+          indianSmartz = resp.data;
+          const allServices = {
+            followizz,
+            paytoz,
+            indianSmartz,
+            SMMz
+
+          }
+          res.json(allServices);
+          }).catch(err => {
+          res.json({"message": "error"})
+          });
+          
+
+
+          }).catch(err => {
+          res.json({"message": "error"})
+          });
+      
+
+      }).catch(err => {
+      res.json({"message": "error"})
+      });
+
+}).catch(err => {
+  res.json({"message": "error"})
+});
+
+
+
+
+
+
+});
+
+
 
 app.listen(5000, function() {
   console.log("server listening on port 5000");

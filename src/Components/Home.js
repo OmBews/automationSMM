@@ -32,12 +32,29 @@ function Home() {
   const [SMMLikes, setSMMLikes] = useState(null);
   const [SMMComments, setSMMComments] = useState(null);
   const [secondErr, setSecondErr] = useState(false);
+  const [followizServices, setfollowizServices] = useState([]);
+  const [paytoServices, setPaytoServices] = useState([]);
+  const [SMMServices, setSMMServices] = useState([]);
+  const [followizFiltered, setFollowizFiltered] = useState([]);
+  const [SMMFiltered, setSMMFiltered] = useState([]);
+  const [paytoFiltered, setPaytoFiltered] = useState([]);
+  const [categoriesFollowiz, setCategoriesFollowiz] = useState([]);
+  const [categoriesPayto, setCategoriesPayto] = useState([]);
+  const [categoriesSMM, setCategoriesSMM] = useState([]);
+  const [categoriesIndianSmart, setCategoriesIndianSmart] = useState([]);
+  const [followizFilteredLikes, setFollowizFilteredLikes] = useState([]);
+  const [paytoFilteredLikes, setPaytoFilteredLikes] = useState([]);
+  const [SMMFilteredLikes, setSMMFilteredLikes] = useState([]);
+  const [commentFiltered, setCommentFiltered] = useState([]);
+  const [commentFilteredPayto, setCommentFilteredPayto] = useState([]);
+  const [commentFilteredSMM, setCommentFilteredSMM] = useState([]);
   
 
   useEffect(() => {
-    fetch();
-    if(countForUseEffect)
-      initFetch();
+    // fetch();
+    initFetchServices();
+    // if(countForUseEffect)
+      // initFetch();
     countForUseEffect = 0;
     // auth.onAuthStateChanged(user => {
     //   if (user == null) {
@@ -48,6 +65,187 @@ function Home() {
   }, [userStatus]);
 
 
+
+  function initFetchServices(){
+    let tempCategoriesArray = [];
+    let tempCategoriesArrayPayto = [];
+    let tempCategoriesArraySMM = [];
+    let tempCategoriesArrayIndianSmart = [];
+    let tempArray = [];
+    let tempArrayPayto = [];
+    let tempArraySMM = [];
+    let tempArrayIndianSmart = [];
+    axios.post('http://localhost:5000/fetch')
+    .then(res => {
+      console.log(res.data)
+
+      res.data.followizz.map((service, index) => {
+          if(
+            service.category == "Instagram - Followers [Guaranteed/Refill]"  || 
+            service.category == "Instagram -  Followers [Not Guaranteed/No Refill]"  || 
+            service.category == "Instagram -  Followers [Targeted]"  || 
+            service.category == "Instagram - Followers [ADS]"  || 
+            service.category == "Instagram -  Likes"  || 
+            service.category == "Instagram -  Likes [Targeted]"  || 
+            service.category == "Instagram - Likes [Per Minute]"  || 
+            service.category == "Instagram - Likes [Last Posts]"  || 
+            service.category == "Instagram -  Comments"
+          
+            ){
+            tempCategoriesArray.push(service.category)
+            tempArray.push(service);
+            }
+        });
+
+        res.data.paytoz.map(service => {
+          if(
+            service.category == "➡️Instagram Likes" ||
+            service.category == "➡️Instagram Followers (Guaranteed)" ||
+            service.category == "➡️Instagram Followers (No Refill)" ||
+            service.category == "➡️Instagram Comments and Comment Likes" 
+          ){
+          tempCategoriesArrayPayto.push(service.category);
+          tempArrayPayto.push(service)
+          }
+        })
+
+        res.data.SMMz.map(service => {
+          if(
+            service.category.includes('Follower') ||
+            service.category.includes('Like') ||
+            service.category.includes('Comments Worldwide')
+          ){
+          tempCategoriesArraySMM.push(service.category);
+          tempArraySMM.push(service)
+          }
+        })
+
+        // res.data.indianSmartz.map(service => {
+        //   if(
+        //     service.category.includes('Comments') || 
+        //     service.category.includes('Like') || 
+        //     service.category.includes('Follower')
+        //   ){
+        //   tempCategoriesArrayIndianSmart.push(service.category);
+        //   tempArrayIndianSmart.push(service)
+        //   }
+        // })
+        
+        let categories = [...new Set(tempCategoriesArray)];
+        let categoriesPaytoArray = [...new Set(tempCategoriesArrayPayto)];
+        let categoriesSMMArray = [...new Set(tempCategoriesArraySMM)];
+        let categoriesIndianSmartArray = [...new Set(tempCategoriesArrayIndianSmart)];
+        let commentService = [];
+        let commentServicePayto = [];
+        let commentServiceSMM = [];
+
+        tempArray.map(obj => {
+          if(obj.category.includes('omment'))
+            commentService.push(obj);
+        });
+        tempArrayPayto.map(obj => {
+          if(obj.category.includes('omment'))
+          commentServicePayto.push(obj);
+        })
+        tempArraySMM.map(obj => {
+          if(obj.category.includes('omment'))
+          commentServiceSMM.push(obj);
+        })
+        setCommentFiltered(commentService);
+        setCommentFilteredPayto(commentServicePayto);
+        setCommentFilteredSMM(commentServiceSMM);
+        setfollowizServices(tempArray);
+        setPaytoServices(tempArrayPayto);
+        setSMMServices(tempArraySMM);
+        setCategoriesFollowiz(categories);
+        setCategoriesPayto(categoriesPaytoArray);
+        setCategoriesSMM(categoriesSMMArray);
+        setCategoriesIndianSmart(categoriesIndianSmartArray);
+
+    }).catch(err => console.log(err))
+  }
+
+
+  function categoryChangeFollowiz(e){
+    console.log(e.target.value)
+    let filtered = [];
+    followizServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setFollowizFiltered(filtered);
+  }
+
+
+  function categoryChangeLikesFollowiz(e){
+    console.log(e.target.value)
+    let filtered = [];
+    followizServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setFollowizFilteredLikes(filtered);
+  }
+
+
+
+
+
+  function categoryChangePayto(e){
+    console.log(e.target.value)
+    let filtered = [];
+    paytoServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setPaytoFiltered(filtered);
+  }
+
+
+  function categoryChangeLikesPayto(e){
+    console.log(e.target.value)
+    let filtered = [];
+    paytoServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setPaytoFilteredLikes(filtered);
+  }
+
+
+
+  function categoryChangeSMM(e){
+    console.log(e.target.value)
+    let filtered = [];
+    SMMServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setSMMFiltered(filtered);
+  }
+
+
+  function categoryChangeLikesSMM(e){
+    console.log(e.target.value)
+    let filtered = [];
+    SMMServices.map(service => {
+      console.log(service.category)
+      if(service.category == e.target.value)
+        filtered.push(service);
+    });
+    console.log(filtered)
+    setSMMFilteredLikes(filtered);
+  }
 
   async function fetch() {
     await axios
@@ -453,49 +651,80 @@ function Home() {
             </div>
           </div> */}
           <hr />
-          {initialFetch == null ? <>
-          <div className="alert alert-info">Loading the latest prices.. Please wait for 40-45 seconds.
+          
+           <>
+          <div className="alert alert-info">Loading the latest prices.. Please wait for 5-10 seconds.
             </div></>:<>
             <div className="container pt-5 mt-5 pb-5 mb-5">
             <div className="row">
           <div className="col col-lg-4">
-            <h1>Followiz</h1>
+            <h1>Categories</h1>
             <div class="form-group">
-    <label for="exampleFormControlSelect1">Followers</label>
+    <label for="exampleFormControlSelect1">Categories Followers</label>
+    <select onChange={categoryChangeFollowiz} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+    {categoriesFollowiz.map(category => {
+      return(
+        category.includes('Followers') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+    {/* <option >Instagram - Followers [Not Guaranteed/No Refill]</option>
+    <option >Instagram - Followers [Targeted]</option>
+    <option >Instagram - Followers [ADS]</option> */}
+    </select>
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
     <select onChange={handleFollowizFollowers} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
-    {initialFetch.followizFollowersArray.map(item => {
+    {followizFiltered.map(item => {
       return(
-        <option value={item}>{item}</option>
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
-    
     </select>
-    <label for="exampleFormControlSelect1">Comments</label>
+    <br />
+    <label for="exampleFormControlSelect1">Categories Likes</label>
+    <select onChange={categoryChangeLikesFollowiz} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+    {categoriesFollowiz.map(category => {
+      return(
+        category.includes('Likes') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+  </select>
+
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
+    <select onChange={handleFollowizLikes} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+
+    {followizFilteredLikes.map(item => {
+      return(
+
+        <option value={item.name}>{item.name}</option>
+
+      );
+    })}
+    </select>
+    <br />
+
+    <label for="exampleFormControlSelect1">Category Services</label>
     <select onChange={handleFollowizComments} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
-    {initialFetch.followizCommentsArray.map(item => {
+    {commentFiltered.map(item => {
       return(
-        <option value={item}>{item}</option>
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
     </select>
-    <label for="exampleFormControlSelect1">Likes</label>
+    <br />
 
-    <select onChange={handleFollowizLikes} class="form-control" id="exampleFormControlSelect1">
-    <option >...</option>
-  
-    {initialFetch.followizLikesArray.map(item => {
-      return(
-        <option value={item}>{item}</option>
-
-      );
-    })}
-    </select>
     <label>Number of followers </label>
                     <input
                       onChange={handleFollowersFollowiz}
@@ -504,46 +733,77 @@ function Home() {
                       id="comment"
                       placeholder="Input Followers"
                     />
+                    <br />
+                    <button className="btn btn-lg btn-primary">Start</button>
   </div>
           </div>
           <div className="col col-lg-4">
             <h1>Payto</h1>
-    <label for="exampleFormControlSelect1">Followers</label>
-
-            <select onChange={handlePaytoFollowers} class="form-control" id="exampleFormControlSelect1">
-            <option >...</option>
-  
-            {initialFetch.paytoFollowersArray.map(item => {
-      return(
-        <option value={item}>{item}</option>
-
-      );
-    })}
-    </select>
-    <label for="exampleFormControlSelect1">Comments</label>
-
-    <select onChange={handlePaytoComments} class="form-control" id="exampleFormControlSelect1">
+            <label for="exampleFormControlSelect1">Categories Followers</label>
+    <select onChange={categoryChangePayto} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
-  
-    {initialFetch.paytoCommentsArray.map(item => {
+    {categoriesPayto.map(category => {
       return(
-        <option value={item}>{item}</option>
+        category.includes('Followers') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+    {/* <option >Instagram - Followers [Not Guaranteed/No Refill]</option>
+    <option >Instagram - Followers [Targeted]</option>
+    <option >Instagram - Followers [ADS]</option> */}
+    </select>
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
+    <select onChange={handlePaytoFollowers} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+
+    {paytoFiltered.map(item => {
+      return(
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
     </select>
-    <label for="exampleFormControlSelect1">Likes</label>
+    <br />
+    <label for="exampleFormControlSelect1">Categories Likes</label>
+    <select onChange={categoryChangeLikesPayto} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+    {categoriesPayto.map(category => {
+      return(
+        category.includes('Likes') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+  </select>
 
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
     <select onChange={handlePaytoLikes} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
-    {initialFetch.paytoLikesArray.map(item => {
+    {paytoFilteredLikes.map(item => {
       return(
-        <option value={item}>{item}</option>
+
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
     </select>
+    <br />
+
+    <label for="exampleFormControlSelect1">Category Services</label>
+    <select onChange={handlePaytoComments} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+
+    {commentFilteredPayto.map(item => {
+      return(
+        <option value={item.name}>{item.name}</option>
+
+      );
+    })}
+    </select>
+    <br />
+
     <label>Number of followers </label>
                     <input
                       onChange={handleFollowersPayto}
@@ -552,46 +812,77 @@ function Home() {
                       id="comment"
                       placeholder="Input Followers"
                     />
+                    <br />
+                    <button className="btn btn-lg btn-primary">Start</button>
           </div>
           <div className="col col-lg-4">
             <h1>SMM</h1>
-    <label for="exampleFormControlSelect1">Followers</label>
-
-            <select onChange={handleSMMFollowers} class="form-control" id="exampleFormControlSelect1">
-            <option >...</option>
-
-            {initialFetch.SMMFollowersArray.map(item => {
-      return(
-        <option value={item}>{item}</option>
-
-      );
-    })}
-    </select>
-    <label for="exampleFormControlSelect1">Comments</label>
-
-    <select onChange={handleSMMComments} class="form-control" id="exampleFormControlSelect1">
+            <label for="exampleFormControlSelect1">Categories Followers</label>
+    <select onChange={categoryChangeSMM} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
-  
-    {initialFetch.SMMCommentsArray.map(item => {
+    {categoriesSMM.map(category => {
       return(
-        <option value={item}>{item}</option>
+        category.includes('Followers') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+    {/* <option >Instagram - Followers [Not Guaranteed/No Refill]</option>
+    <option >Instagram - Followers [Targeted]</option>
+    <option >Instagram - Followers [ADS]</option> */}
+    </select>
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
+    <select onChange={handleSMMFollowers} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+
+    {SMMFiltered.map(item => {
+      return(
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
     </select>
-    <label for="exampleFormControlSelect1">Likes</label>
+    <br />
+    <label for="exampleFormControlSelect1">Categories Likes</label>
+    <select onChange={categoryChangeLikesSMM} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+    {categoriesSMM.map(category => {
+      return(
+        category.includes('Likes') ?
+        <option value={category}>{category}</option>: <></>
+      );
+    })}
+  </select>
 
+    <br />
+    <label for="exampleFormControlSelect1">Services</label>
     <select onChange={handleSMMLikes} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
-  
-    {initialFetch.SMMLikesArray.map(item => {
+
+    {SMMFilteredLikes.map(item => {
       return(
-        <option value={item}>{item}</option>
+
+        <option value={item.name}>{item.name}</option>
 
       );
     })}
     </select>
-               <label>Number of followers </label>
+    <br />
+
+    <label for="exampleFormControlSelect1">Category Services</label>
+    <select onChange={handleSMMComments} class="form-control" id="exampleFormControlSelect1">
+    <option >...</option>
+
+    {commentFilteredSMM.map(item => {
+      return(
+        <option value={item.name}>{item.name}</option>
+
+      );
+    })}
+    </select>
+    <br />
+
+    <label>Number of followers </label>
                     <input
                       onChange={handleFollowersSMM}
                       type="number"
@@ -599,11 +890,13 @@ function Home() {
                       id="comment"
                       placeholder="Input Followers"
                     />
+                    <br />
+                    <button className="btn btn-lg btn-primary">Start</button>
           </div>
           </div>
           </div>
        
-            </>}
+            </>
          
         </>
       )}
