@@ -92,12 +92,12 @@ function Home() {
     // if(countForUseEffect)
       // initFetch();
     countForUseEffect = 0;
-    // auth.onAuthStateChanged(user => {
-    //   if (user == null) {
-    //     setRedirect(true);
-    //     setUserStatus(user);
-    //   } else setUserStatus(user);
-    // });
+    auth.onAuthStateChanged(user => {
+      if (user == null) {
+        setRedirect(true);
+        setUserStatus(user);
+      } else setUserStatus(user);
+    });
   }, [userStatus]);
 
 
@@ -777,7 +777,7 @@ function Home() {
 
     {followizFiltered.map(item => {
       return(
-      <option value={item.service}>{item.name} - ${item.rate}</option>
+      <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}] </option>
 
       );
     })}
@@ -790,7 +790,7 @@ function Home() {
       return(
         category.includes('Likes') ?
         <option value={category}>{category}</option>: <></>
-      );
+      );  
     })}
   </select>
 
@@ -802,7 +802,7 @@ function Home() {
     {followizFilteredLikes.map(item => {
       return(
 
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -815,7 +815,7 @@ function Home() {
 
     {commentFiltered.map(item => {
       return(
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -858,7 +858,7 @@ function Home() {
 
     {paytoFiltered.map(item => {
       return(
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
       );
     })}
     </select>
@@ -882,7 +882,7 @@ function Home() {
     {paytoFilteredLikes.map(item => {
       return(
 
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -895,7 +895,7 @@ function Home() {
 
     {commentFilteredPayto.map(item => {
       return(
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -936,7 +936,7 @@ function Home() {
 
     {SMMFiltered.map(item => {
       return(
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -961,7 +961,7 @@ function Home() {
     {SMMFilteredLikes.map(item => {
       return(
 
-        <option value={item.service}>{item.name} - ${item.rate}</option>
+        <option value={item.service}>{item.name} - ${item.rate} - min[{item.min}]</option>
 
       );
     })}
@@ -999,6 +999,7 @@ function Home() {
          
         </>
       )}
+      <button onClick={handleLogout} className="btn btn-danger col-sm-12">logout</button>
     </>
   );
 }
