@@ -113,7 +113,7 @@ function Home() {
       SMMFollowers,
       SMMComments
     }
-    axios.post('http://localhost:5000/smmfollowers', obj)
+    axios.post('http://193.46.199.129:5000/smmfollowers', obj)
       .then(res => {
         console.log(res)
       })
@@ -133,7 +133,7 @@ function Home() {
       PaytoFollowers,
       PaytoComments
     }
-    axios.post('http://localhost:5000/paytofollowers', obj)
+    axios.post('http://193.46.199.129:5000/paytofollowers', obj)
       .then(res => {
         console.log(res)
       })
@@ -146,7 +146,7 @@ function Home() {
     if(followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null )
     setErrorFollowiz(true);
     else {
-      setErrorPayto(false);
+      setErrorFollowiz(false);
     const obj = {
       followersFollowiz,
       followizLikes,
@@ -155,7 +155,7 @@ function Home() {
     }
     console.log(obj);
 
-    axios.post('http://localhost:5000/followizfollowers', obj)
+    axios.post('http://193.46.199.129:5000/followizfollowers', obj)
       .then(res => {
         console.log(res.data)
       })
@@ -173,7 +173,7 @@ function Home() {
     let tempArrayPayto = [];
     let tempArraySMM = [];
     let tempArrayIndianSmart = [];
-    axios.post('http://localhost:5000/fetch')
+    axios.post('http://193.46.199.129:5000/fetch')
     .then(res => {
       console.log(res.data)
 
@@ -345,7 +345,7 @@ function Home() {
 
   async function fetch() {
     await axios
-      .get("http://localhost:5000/api/teammembers")
+      .get("http://193.46.199.129:5000/api/teammembers")
       .then(res => {
         setTeammembers(res.data);
         console.log("team" + res.data);
@@ -353,7 +353,7 @@ function Home() {
       .catch(err => console.log(err));
 
     await axios
-      .get("http://localhost:5000/api/comments")
+      .get("http://193.46.199.129:5000/api/comments")
       .then(res => {
         setComments(res.data);
       })
@@ -361,7 +361,7 @@ function Home() {
   }
 
   async function initFetch(){
-    await axios.post('http://localhost:5000/api/scrape')
+    await axios.post('http://193.46.199.129:5000/api/scrape')
     .then(res => {
       setInitialFetch(res.data)
     })
@@ -389,13 +389,13 @@ function Home() {
       url: url
     };
     axios
-      .post("http://localhost:5000/api/teammembers", obj)
+      .post("http://193.46.199.129:5000/api/teammembers", obj)
       .then(res => {
         setSuccessURL(true);
         setLoading(false);
 
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://193.46.199.129:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
             console.log("team" + res.data);
@@ -416,12 +416,12 @@ function Home() {
       comment: comment
     };
     axios
-      .post("http://localhost:5000/api/comments", obj)
+      .post("http://193.46.199.129:5000/api/comments", obj)
       .then(res => {
         setSuccessComment(true);
         setLoadingComment(false);
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://193.46.199.129:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -435,10 +435,10 @@ function Home() {
 
   const handleDeleteComment = item => {
     axios
-      .post(`http://localhost:5000/api/comments/${item._id}`)
+      .post(`http://193.46.199.129:5000/api/comments/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/comments")
+          .get("http://193.46.199.129:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -449,10 +449,10 @@ function Home() {
 
   const handleDeleteMember = item => {
     axios
-      .post(`http://localhost:5000/api/teammembers/${item._id}`)
+      .post(`http://193.46.199.129:5000/api/teammembers/${item._id}`)
       .then(() => {
         axios
-          .get("http://localhost:5000/api/teammembers")
+          .get("http://193.46.199.129:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
           })
@@ -497,7 +497,7 @@ function Home() {
       //   SMM
       // };
       axios
-        .post("http://localhost:5000/api/starter")
+        .post("http://193.46.199.129:5000/api/starter")
         .then(res => {})
         .catch(err => console.log(err));
         setLoadingGo(true);
@@ -754,6 +754,8 @@ function Home() {
             <div className="row">
           <div className="col col-lg-4">
             <h1>Followiz</h1>
+            {errFollowiz ? <div className="alert alert-danger">Please fill out all the fields</div> : <></>}
+
             <div class="form-group">
     <label for="exampleFormControlSelect1">Categories Followers</label>
     <select onChange={categoryChangeFollowiz} class="form-control" id="exampleFormControlSelect1">
@@ -829,11 +831,13 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-                    <button onClick={handleSubmitFollowiz} className="btn btn-lg btn-primary">{SMMSubmitCheck ? <>Started</>:<>Start</>}</button>
+                    <button onClick={handleSubmitFollowiz} className="btn btn-lg btn-primary">{!errFollowiz && SMMSubmitCheck ? <>Started</>:<>Start</>}</button>
   </div>
           </div>
           <div className="col col-lg-4">
             <h1>Payto</h1>
+            {errPayto ? <div className="alert alert-danger">Please fill out all the fields</div> : <></>}
+
             <label for="exampleFormControlSelect1">Categories Followers</label>
     <select onChange={categoryChangePayto} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
@@ -907,7 +911,7 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-                    <button onClick={handleSubmitPayto} className="btn btn-lg btn-primary">{PaytoSubmitCheck ? <>Started</>:<>Start</>}</button>
+                    <button onClick={handleSubmitPayto} className="btn btn-lg btn-primary">{!errPayto && PaytoSubmitCheck ? <>Started</>:<>Start</>}</button>
           </div>
           <div className="col col-lg-4">
             <h1>SMM</h1>
@@ -986,7 +990,7 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-  <button onClick={handleSubmitSMM} className={"btn btn-lg btn-primary"}>{followizSubmitCheck ? <>Started</>:<>Start</>}</button>
+  <button onClick={handleSubmitSMM} className={"btn btn-lg btn-primary"}>{!errSMM && followizSubmitCheck ? <>Started</>:<>Start</>}</button>
           </div>
           </div>
           </div>

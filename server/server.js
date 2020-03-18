@@ -685,7 +685,7 @@ mongoose.connect(db, () => {
 
 //   // ////////////////////////////////////Comments BLOCK//////////////////////////////////////
 
-//   axios.get("http://localhost:5000/api/comments").then(res => {
+//   axios.get("http://193.46.199.129:5000/api/comments").then(res => {
 //     comments = res.data;
 
 //     // delay function
@@ -972,7 +972,7 @@ let orders = [];
 app.post('/followizfollowers', async (req, res) => {
   console.log(req.body);
   followizOrder = req.body;
-  await axios.get('http://localhost:5000/api/teammembers')
+  await axios.get('http://193.46.199.129:5000/api/teammembers')
     .then(response => {
       if(response.data){
       response.data.map(async (item, index) => {
@@ -1001,7 +1001,7 @@ app.post('/followizfollowers', async (req, res) => {
 app.post('/paytofollowers',async (req, res) => {
   console.log(req.body);
   paytoOrder = req.body;
-  await axios.get('http://localhost:5000/api/teammembers')
+  await axios.get('http://193.46.199.129:5000/api/teammembers')
     .then(response => {
       if(response.data){
       response.data.map(async (item, index) => {
@@ -1030,7 +1030,7 @@ app.post('/paytofollowers',async (req, res) => {
 app.post('/smmfollowers',async (req, res) => {
   console.log(req.body);
   SMMOrder = req.body;
-  await axios.get('http://localhost:5000/api/teammembers')
+  await axios.get('http://193.46.199.129:5000/api/teammembers')
     .then(response => {
       if(response.data){
       response.data.map(async (item, index) => {
@@ -1064,7 +1064,7 @@ app.post('/api/starter',(req, res) => {
   };
    // getting the array of teammembers
    axios
-   .get("http://localhost:5000/api/teammembers")
+   .get("http://193.46.199.129:5000/api/teammembers")
    .then(async resp => {
      teamMembers = await resp.data;
      let counter = 0;
@@ -1096,7 +1096,7 @@ app.post('/api/starter',(req, res) => {
         
           await axios
           .post(
-            `http://localhost:5000/api/teammembers/${teamMembers[count]}._id}/update`,
+            `http://193.46.199.129:5000/api/teammembers/${teamMembers[count]}._id}/update`,
             obj
           )
           .then(response => {
@@ -1122,7 +1122,7 @@ app.post('/api/starter',(req, res) => {
     console.log("running");
     let automationArray = [];
     axios
-      .get("http://localhost:5000/api/teammembers")
+      .get("http://193.46.199.129:5000/api/teammembers")
       .then(async res => {
         let check = false;
         teamMembers = res.data;
@@ -1153,7 +1153,7 @@ app.post('/api/starter',(req, res) => {
   
                 await axios
                   .post(
-                    `http://localhost:5000/api/teammembers/${teamMembers[count]._id}/update`,
+                    `http://193.46.199.129:5000/api/teammembers/${teamMembers[count]._id}/update`,
                     obj
                   )
                   .then(() => console.log('done with updating'))
@@ -1175,7 +1175,7 @@ app.post('/api/starter',(req, res) => {
 
 
         await sleep((teamMembers.length  + 1) * 10000);
-          axios.get('http://localhost:5000/api/comments')
+          axios.get('http://193.46.199.129:5000/api/comments')
             .then( async resp => {
               for(let count = 0; count < automationArray.length; count++){
 
@@ -1730,7 +1730,7 @@ app.post('/api/starter',(req, res) => {
   }
         // automationArray.map((order, index) => {
         //   console.log(order);
-        //   // await axios.get('http://localhost:5000/api/teammembers')
+        //   // await axios.get('http://193.46.199.129:5000/api/teammembers')
         //   // .then(response => {
         //   //   if(response.data){
         //   //   response.data.map(async (item, index) => {
@@ -1755,7 +1755,7 @@ app.post('/api/starter',(req, res) => {
           
 
 
-        //   // await axios.get('http://localhost:5000/api/teammembers')
+        //   // await axios.get('http://193.46.199.129:5000/api/teammembers')
         //   // .then(response => {
         //   //   if(response.data){
         //   //   response.data.map(async (item, index) => {
@@ -1779,7 +1779,7 @@ app.post('/api/starter',(req, res) => {
 
 
 
-        //   // await axios.get('http://localhost:5000/api/teammembers')
+        //   // await axios.get('http://193.46.199.129:5000/api/teammembers')
         //   // .then(response => {
         //   //   if(response.data){
         //   //   response.data.map(async (item, index) => {
