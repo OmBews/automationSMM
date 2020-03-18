@@ -16,15 +16,11 @@ function Home() {
   const [loadingComment, setLoadingComment] = useState(false);
   const [teammembers, setTeammembers] = useState([]);
   const [comments, setComments] = useState([]);
-  const [followersFollowiz, setfollowersFollowiz] = useState(0);
   const [followersSMM, setfollowersSMM] = useState(0);
   const [followersPayto, setfollowersPayto] = useState(0);
   const [loadingGo, setLoadingGo] = useState(false);
   const [err, setErr] = useState(false);
   const [initialFetch, setInitialFetch] = useState(null);
-  const [followizFollowers, setFollowizFollowers] = useState(null);
-  const [followizLikes, setFollowizLikes] = useState(null);
-  const [followizComments, setFollowizComments] = useState(null);
   const [PaytoFollowers, setPaytoFollowers] = useState(null);
   const [PaytoLikes, setPaytoLikes] = useState(null);
   const [PaytoComments, setPaytoComments] = useState(null);
@@ -49,9 +45,49 @@ function Home() {
   const [commentFilteredPayto, setCommentFilteredPayto] = useState([]);
   const [commentFilteredSMM, setCommentFilteredSMM] = useState([]);
   
+  //-----------------------------------------------
+  //          states for form at the last
+  //-----------------------------------------------
+  //followiz states
+  const [followersFollowiz, setfollowersFollowiz] = useState(0);
+  const [followizFollowers, setFollowizFollowers] = useState(null);
+  const [followizLikes, setFollowizLikes] = useState(null);
+  const [followizComments, setFollowizComments] = useState(null);
+  const [followersFollowizCategory, setFollowersFollowizCategory] = useState('');
+  const [followersFollowizService, setFollowersFollowizService] = useState('');
+  const [followersFollowizNumber, setFollowersFollowizNumber] = useState('');
+  const [likesFollowizCategory, setLikesFollowizCategory] = useState('');
+  const [likesFollowizService, setLikesFollowizService] = useState('');
+  const [commentsFollowizService, setCommenstFollowizService] = useState('');
+  const [SMMSubmitCheck, setSMMSubmitCheck] = useState(false);
+  const [errFollowiz, setErrorFollowiz] = useState(false);
+
+
+  //payto states
+  const [followersPaytoCategory, setFollowersPaytoCategory] = useState('');
+  const [followersPaytoService, setFollowersPaytoService] = useState('');
+  const [followersPaytoNumber, setFollowersPaytoNumber] = useState('');
+  const [likesPaytoCategory, setLikesPaytoCategory] = useState('');
+  const [likesPaytoService, setLikesPaytoService] = useState('');
+  const [commentsPaytoService, setCommenstPaytoService] = useState('');
+  const [PaytoSubmitCheck, setPaytoSubmitCheck] = useState(false);
+  const [errPayto, setErrorPayto] = useState(false);
+
+
+  //SMM states
+  const [followersSMMCategory, setFollowersSMMCategory] = useState('');
+  const [errSMM, setErrorSMM] = useState(false);
+  const [followersSMMService, setFollowersSMMService] = useState('');
+  const [followersSMMNumber, setFollowersSMMNumber] = useState('');
+  const [likesSMMCategory, setLikesSMMCategory] = useState('');
+  const [likesSMMService, setLikesSMMService] = useState('');
+  const [commentsSMMService, setCommenstSMMService] = useState('');
+  const [followizSubmitCheck, setFollowizSubmitCheck] = useState(false);
+
+  //--------------------------------------------------------------
 
   useEffect(() => {
-    // fetch();
+    fetch();
     initFetchServices();
     // if(countForUseEffect)
       // initFetch();
@@ -64,6 +100,68 @@ function Home() {
     // });
   }, [userStatus]);
 
+
+  function handleSubmitSMM(){
+    setFollowizSubmitCheck(true);
+    if(followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null )
+      setErrorSMM(true);
+    else{ 
+      setErrorSMM(false)
+    const obj = {
+      followersSMM,
+      SMMLikes,
+      SMMFollowers,
+      SMMComments
+    }
+    axios.post('http://localhost:5000/smmfollowers', obj)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log(err));
+    }
+  }
+
+  function handleSubmitPayto(){
+    setPaytoSubmitCheck(true);
+    if(followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null )
+      setErrorPayto(true);
+    else{
+      setErrorPayto(false);
+    const obj = {
+      followersPayto,
+      PaytoLikes,
+      PaytoFollowers,
+      PaytoComments
+    }
+    axios.post('http://localhost:5000/paytofollowers', obj)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => console.log(err));
+    }
+  }
+
+  function handleSubmitFollowiz(){
+    setSMMSubmitCheck(true);
+    if(followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null )
+    setErrorFollowiz(true);
+    else {
+      setErrorPayto(false);
+    const obj = {
+      followersFollowiz,
+      followizLikes,
+      followizFollowers,
+      followizComments
+    }
+    console.log(obj);
+
+    axios.post('http://localhost:5000/followizfollowers', obj)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => console.log(err));
+    }
+  }
 
 
   function initFetchServices(){
@@ -167,7 +265,8 @@ function Home() {
 
 
   function categoryChangeFollowiz(e){
-    console.log(e.target.value)
+    console.log(e.target.value);
+    setFollowersFollowizCategory(e.target.value)
     let filtered = [];
     followizServices.map(service => {
       console.log(service.category)
@@ -180,7 +279,8 @@ function Home() {
 
 
   function categoryChangeLikesFollowiz(e){
-    console.log(e.target.value)
+    console.log(e.target.value);
+    setLikesFollowizCategory(e.target.value);
     let filtered = [];
     followizServices.map(service => {
       console.log(service.category)
@@ -190,9 +290,6 @@ function Home() {
     console.log(filtered)
     setFollowizFilteredLikes(filtered);
   }
-
-
-
 
 
   function categoryChangePayto(e){
@@ -219,7 +316,6 @@ function Home() {
     console.log(filtered)
     setPaytoFilteredLikes(filtered);
   }
-
 
 
   function categoryChangeSMM(e){
@@ -249,7 +345,7 @@ function Home() {
 
   async function fetch() {
     await axios
-      .get("http://193.46.199.129:5000/api/teammembers")
+      .get("http://localhost:5000/api/teammembers")
       .then(res => {
         setTeammembers(res.data);
         console.log("team" + res.data);
@@ -257,7 +353,7 @@ function Home() {
       .catch(err => console.log(err));
 
     await axios
-      .get("http://193.46.199.129:5000/api/comments")
+      .get("http://localhost:5000/api/comments")
       .then(res => {
         setComments(res.data);
       })
@@ -265,7 +361,7 @@ function Home() {
   }
 
   async function initFetch(){
-    await axios.post('http://193.46.199.129:5000/api/scrape')
+    await axios.post('http://localhost:5000/api/scrape')
     .then(res => {
       setInitialFetch(res.data)
     })
@@ -293,13 +389,13 @@ function Home() {
       url: url
     };
     axios
-      .post("http://193.46.199.129:5000/api/teammembers", obj)
+      .post("http://localhost:5000/api/teammembers", obj)
       .then(res => {
         setSuccessURL(true);
         setLoading(false);
 
         axios
-          .get("http://193.46.199.129:5000/api/teammembers")
+          .get("http://localhost:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
             console.log("team" + res.data);
@@ -320,12 +416,12 @@ function Home() {
       comment: comment
     };
     axios
-      .post("http://193.46.199.129:5000/api/comments", obj)
+      .post("http://localhost:5000/api/comments", obj)
       .then(res => {
         setSuccessComment(true);
         setLoadingComment(false);
         axios
-          .get("http://193.46.199.129:5000/api/comments")
+          .get("http://localhost:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -339,10 +435,10 @@ function Home() {
 
   const handleDeleteComment = item => {
     axios
-      .post(`http://193.46.199.129:5000/api/comments/${item._id}`)
+      .post(`http://localhost:5000/api/comments/${item._id}`)
       .then(() => {
         axios
-          .get("http://193.46.199.129:5000/api/comments")
+          .get("http://localhost:5000/api/comments")
           .then(res => {
             setComments(res.data);
           })
@@ -353,10 +449,10 @@ function Home() {
 
   const handleDeleteMember = item => {
     axios
-      .post(`http://193.46.199.129:5000/api/teammembers/${item._id}`)
+      .post(`http://localhost:5000/api/teammembers/${item._id}`)
       .then(() => {
         axios
-          .get("http://193.46.199.129:5000/api/teammembers")
+          .get("http://localhost:5000/api/teammembers")
           .then(res => {
             setTeammembers(res.data);
           })
@@ -367,42 +463,41 @@ function Home() {
 
   const StartingEngine = e => {
     e.preventDefault();
-    if (followersFollowiz < 100 || followersSMM < 100 || followersPayto < 100) setErr(true);
-    else if(followizFollowers == null || followizComments == null || followizLikes == null || PaytoComments == null || PaytoFollowers == null || PaytoLikes == null || SMMComments == null || SMMFollowers == null || SMMLikes == null)
-    setSecondErr(true)
+    if(followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null || followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null || followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null )
+    setErr(true)
     else {
-      // setSecondErr(false)
 
-      const followiz = {
-        followers: followizFollowers,
-        comments: followizComments,
-        likes: followizLikes
-      }
+      setErr(false);
+      // const followiz = {
+      //   followers: followizFollowers,
+      //   comments: followizComments,
+      //   likes: followizLikes
+      // }
 
-      const payto = {
-        followers: PaytoFollowers,
-        comments: PaytoComments,
-        likes: PaytoLikes
-      }
+      // const payto = {
+      //   followers: PaytoFollowers,
+      //   comments: PaytoComments,
+      //   likes: PaytoLikes
+      // }
 
-      const SMM = {
-        followers: SMMFollowers,
-        comments: SMMComments,
-        likes: SMMLikes
-      }
+      // const SMM = {
+      //   followers: SMMFollowers,
+      //   comments: SMMComments,
+      //   likes: SMMLikes
+      // }
 
-      const obj = {
-        followers: {
-          followersPayto,
-          followersSMM,
-          followersFollowiz
-        },
-        followiz,
-        payto,
-        SMM
-      };
+      // const obj = {
+      //   followers: {
+      //     followersPayto,
+      //     followersSMM,
+      //     followersFollowiz
+      //   },
+      //   followiz,
+      //   payto,
+      //   SMM
+      // };
       axios
-        .post("http://193.46.199.129:5000/api/start", obj)
+        .post("http://localhost:5000/api/starter")
         .then(res => {})
         .catch(err => console.log(err));
         setLoadingGo(true);
@@ -622,7 +717,7 @@ function Home() {
                       <>Started</>
                     ) : (
                       <>
-                        {err ? <>Value must be greater than 100</> : <>GO!</>}
+                        {err ? <>Fill out the below fields first</> : <>GO!</>}
                       </>
                     )}
                   </button>
@@ -658,7 +753,7 @@ function Home() {
             <div className="container pt-5 mt-5 pb-5 mb-5">
             <div className="row">
           <div className="col col-lg-4">
-            <h1>Categories</h1>
+            <h1>Followiz</h1>
             <div class="form-group">
     <label for="exampleFormControlSelect1">Categories Followers</label>
     <select onChange={categoryChangeFollowiz} class="form-control" id="exampleFormControlSelect1">
@@ -680,7 +775,7 @@ function Home() {
 
     {followizFiltered.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
+      <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
@@ -705,20 +800,20 @@ function Home() {
     {followizFilteredLikes.map(item => {
       return(
 
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
     </select>
     <br />
 
-    <label for="exampleFormControlSelect1">Category Services</label>
+    <label for="exampleFormControlSelect1">Comments Services</label>
     <select onChange={handleFollowizComments} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
     {commentFiltered.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
@@ -734,7 +829,7 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-                    <button className="btn btn-lg btn-primary">Start</button>
+                    <button onClick={handleSubmitFollowiz} className="btn btn-lg btn-primary">{SMMSubmitCheck ? <>Started</>:<>Start</>}</button>
   </div>
           </div>
           <div className="col col-lg-4">
@@ -759,8 +854,7 @@ function Home() {
 
     {paytoFiltered.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
-
+        <option value={item.service}>{item.name} - ${item.rate}</option>
       );
     })}
     </select>
@@ -784,20 +878,20 @@ function Home() {
     {paytoFilteredLikes.map(item => {
       return(
 
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
     </select>
     <br />
 
-    <label for="exampleFormControlSelect1">Category Services</label>
+    <label for="exampleFormControlSelect1">Comments Services</label>
     <select onChange={handlePaytoComments} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
     {commentFilteredPayto.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
@@ -813,10 +907,11 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-                    <button className="btn btn-lg btn-primary">Start</button>
+                    <button onClick={handleSubmitPayto} className="btn btn-lg btn-primary">{PaytoSubmitCheck ? <>Started</>:<>Start</>}</button>
           </div>
           <div className="col col-lg-4">
             <h1>SMM</h1>
+            {errSMM ? <div className="alert alert-danger">Please fill out all the fields</div> : <></>}
             <label for="exampleFormControlSelect1">Categories Followers</label>
     <select onChange={categoryChangeSMM} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
@@ -837,7 +932,7 @@ function Home() {
 
     {SMMFiltered.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
@@ -862,20 +957,20 @@ function Home() {
     {SMMFilteredLikes.map(item => {
       return(
 
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name} - ${item.rate}</option>
 
       );
     })}
     </select>
     <br />
 
-    <label for="exampleFormControlSelect1">Category Services</label>
+    <label for="exampleFormControlSelect1">Comments Services</label>
     <select onChange={handleSMMComments} class="form-control" id="exampleFormControlSelect1">
     <option >...</option>
 
     {commentFilteredSMM.map(item => {
       return(
-        <option value={item.name}>{item.name}</option>
+        <option value={item.service}>{item.name}</option>
 
       );
     })}
@@ -891,7 +986,7 @@ function Home() {
                       placeholder="Input Followers"
                     />
                     <br />
-                    <button className="btn btn-lg btn-primary">Start</button>
+  <button onClick={handleSubmitSMM} className={"btn btn-lg btn-primary"}>{followizSubmitCheck ? <>Started</>:<>Start</>}</button>
           </div>
           </div>
           </div>
