@@ -1,4 +1,3 @@
 module.exports = {
-  mongoURI:
-    "mongodb://admin:FGuiZhLYDbaJVDxo@SG-automation-31072.servers.mongodirector.com:27017/admin"
+  mongoURI: "mongodb+srv://oceanooi:business100@cluster0-ltbxb.mongodb.net/test?retryWrites=true&w=majority"
 };
