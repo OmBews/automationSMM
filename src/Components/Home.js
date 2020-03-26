@@ -59,7 +59,7 @@ function Home() {
     // -----------------------------------------------
     //          states for form at the last
     // -----------------------------------------------
-    
+
     // followiz states
     const [followersFollowiz, setfollowersFollowiz] = useState(0);
     const [followizFollowers, setFollowizFollowers] = useState(null);
@@ -384,6 +384,7 @@ function Home() {
     async function fetch() {
         await axios.get("http://localhost:5000/api/teammembers").then(res => {
             setTeammembers(res.data);
+            console.log(res);
             console.log("team" + res.data);
         }).catch(err => console.log(err));
 
@@ -606,7 +607,7 @@ function Home() {
                                 teammembers.map(item => {
                                     return (<li class="list-group-item"> {
                                         item.url
-                                    }
+                                    } ({item.limitCounter})
                                         <button onClick={
                                                 () => handleDeleteMember(item)
                                             }

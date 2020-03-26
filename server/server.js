@@ -345,8 +345,8 @@ app.post('/api/starter', (req, res) => {
                         let likes = parseInt(automationArray[count].followers, 10);
                         likes = (likes / 100) * 2;
                         likes = Math.ceil(likes);
-                        if (likes < 50) 
-                            likes = 50;
+                        if (likes < 100) 
+                            likes = 100;
                         
 
 
