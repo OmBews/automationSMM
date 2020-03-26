@@ -44,10 +44,22 @@ function Home() {
     const [commentFiltered, setCommentFiltered] = useState([]);
     const [commentFilteredPayto, setCommentFilteredPayto] = useState([]);
     const [commentFilteredSMM, setCommentFilteredSMM] = useState([]);
+    const [errorSMMFollowers, setErrorSMMFollowers] = useState(false);
+    const [errorSMMFollowersError, setErrorSMMFollowersError] = useState(false);
+    const [doneSMMFollowers, setDoneSMMFollowers] = useState('');
+
+    const [errorPaytoFollowers, setErrorPaytoFollowers] = useState(false);
+    const [errorPaytoFollowersError, setErrorPaytoFollowersError] = useState(false);
+    const [donePaytoFollowers, setDonePaytoFollowers] = useState('');
+
+    const [errorFollowizFollowers, setErrorFollowizFollowers] = useState(false);
+    const [errorFollowizFollowersError, setErrorFollowizFollowersError] = useState(false);
+    const [doneFollowizFollowers, setDoneFollowizFollowers] = useState('');
 
     // -----------------------------------------------
     //          states for form at the last
     // -----------------------------------------------
+    
     // followiz states
     const [followersFollowiz, setfollowersFollowiz] = useState(0);
     const [followizFollowers, setFollowizFollowers] = useState(null);
@@ -117,8 +129,16 @@ function Home() {
                 SMMFollowers,
                 SMMComments
             }
-            axios.post('http://193.46.199.129:5000/smmfollowers', obj).then(res => {
-                console.log(res)
+            axios.post('http://localhost:5000/smmfollowers', obj).then(res => {
+                if(res.data.error){
+                    setErrorSMMFollowers(true);
+                    setErrorSMMFollowersError(res.data.error);
+        }
+                    else if(res.data.order){
+                    setDoneSMMFollowers(true);
+                    setErrorSMMFollowers(false);
+                }
+                // console.log(res.data)
             }).catch(err => console.log(err));
         }
     }
@@ -135,8 +155,14 @@ function Home() {
                 PaytoFollowers,
                 PaytoComments
             }
-            axios.post('http://193.46.199.129:5000/paytofollowers', obj).then(res => {
-                console.log(res)
+            axios.post('http://localhost:5000/paytofollowers', obj).then(res => {
+                if(res.data.order){
+                    setErrorPaytoFollowers(false);
+                    setDonePaytoFollowers(true);
+                } else {
+                    setErrorPaytoFollowers(true);
+                    setErrorPaytoFollowersError(res.data.error)
+                }
             }).catch(err => console.log(err));
         }
     }
@@ -155,9 +181,16 @@ function Home() {
             }
             console.log(obj);
 
-            axios.post('http://193.46.199.129:5000/followizfollowers', obj).then(res => {
-                console.log(res.data)
-            }).catch(err => console.log(err));
+            axios.post('http://localhost:5000/followizfollowers', obj).then(res => {
+            if(res.data.order)
+            {   
+                setErrorFollowizFollowers(false);
+                setDoneFollowizFollowers(true);
+            } else {
+                setErrorFollowizFollowers(true);
+                setErrorFollowizFollowersError(res.data.error);
+            }
+        }).catch(err => console.log(err));
         }
     }
 
@@ -171,7 +204,7 @@ function Home() {
         let tempArrayPayto = [];
         let tempArraySMM = [];
         let tempArrayIndianSmart = [];
-        axios.post('http://193.46.199.129:5000/fetch').then(res => {
+        axios.post('http://localhost:5000/fetch').then(res => {
             console.log(res.data)
 
             res.data.followizz.map((service, index) => {
@@ -349,18 +382,18 @@ function Home() {
     }
 
     async function fetch() {
-        await axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
+        await axios.get("http://localhost:5000/api/teammembers").then(res => {
             setTeammembers(res.data);
             console.log("team" + res.data);
         }).catch(err => console.log(err));
 
-        await axios.get("http://193.46.199.129:5000/api/comments").then(res => {
+        await axios.get("http://localhost:5000/api/comments").then(res => {
             setComments(res.data);
         }).catch(err => console.log(err));
     }
 
     async function initFetch() {
-        await axios.post('http://193.46.199.129:5000/api/scrape').then(res => {
+        await axios.post('http://localhost:5000/api/scrape').then(res => {
             setInitialFetch(res.data)
         }).catch(err => console.log(err));
     }
@@ -385,11 +418,11 @@ function Home() {
         const obj = {
             url: url
         };
-        axios.post("http://193.46.199.129:5000/api/teammembers", obj).then(res => {
+        axios.post("http://localhost:5000/api/teammembers", obj).then(res => {
             setSuccessURL(true);
             setLoading(false);
 
-            axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
+            axios.get("http://localhost:5000/api/teammembers").then(res => {
                 setTeammembers(res.data);
                 console.log("team" + res.data);
             }).catch(err => console.log(err));
@@ -406,10 +439,10 @@ function Home() {
         const obj = {
             comment: comment
         };
-        axios.post("http://193.46.199.129:5000/api/comments", obj).then(res => {
+        axios.post("http://localhost:5000/api/comments", obj).then(res => {
             setSuccessComment(true);
             setLoadingComment(false);
-            axios.get("http://193.46.199.129:5000/api/comments").then(res => {
+            axios.get("http://localhost:5000/api/comments").then(res => {
                 setComments(res.data);
             }).catch(err => console.log(err));
         }).catch(err => {
@@ -419,20 +452,20 @@ function Home() {
     };
 
     const handleDeleteComment = item => {
-        axios.post(`http://193.46.199.129:5000/api/comments/${
+        axios.post(`http://localhost:5000/api/comments/${
             item._id
         }`).then(() => {
-            axios.get("http://193.46.199.129:5000/api/comments").then(res => {
+            axios.get("http://localhost:5000/api/comments").then(res => {
                 setComments(res.data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
     };
 
     const handleDeleteMember = item => {
-        axios.post(`http://193.46.199.129:5000/api/teammembers/${
+        axios.post(`http://localhost:5000/api/teammembers/${
             item._id
         }`).then(() => {
-            axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
+            axios.get("http://localhost:5000/api/teammembers").then(res => {
                 setTeammembers(res.data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
@@ -473,7 +506,9 @@ function Home() {
             // payto,
             // SMM
             // };
-            axios.post("http://193.46.199.129:5000/api/starter").then(res => {}).catch(err => console.log(err));
+            axios.post("http://localhost:5000/api/starter").then(res => {
+                console.log(res.data)
+            }).catch(err => console.log(err));
             setLoadingGo(true);
 
         }
@@ -482,19 +517,27 @@ function Home() {
     const handleFollowersFollowiz = e => {
         e.preventDefault();
         setErr(false);
+        setSMMSubmitCheck(false);
         setfollowersFollowiz(e.target.value);
+        setErrorFollowizFollowers(false);
+
     };
 
     const handleFollowersPayto = e => {
         e.preventDefault();
         setErr(false);
+        setPaytoSubmitCheck(false);
         setfollowersPayto(e.target.value);
+        setErrorPaytoFollowers(false);
+
     };
 
     const handleFollowersSMM = e => {
         e.preventDefault();
+        setFollowizSubmitCheck(false);
         setErr(false);
         setfollowersSMM(e.target.value);
+        setErrorSMMFollowers(false);
     };
 
 
@@ -814,8 +857,36 @@ function Home() {
                                     className="btn btn-lg btn-primary"> {
                                     !errFollowiz && SMMSubmitCheck ? <>Started</> : <>Start</>
                                 }</button>
+                                  {errorFollowizFollowers ? <div className="alert alert-danger">{errorFollowizFollowersError}</div> :<></>}
+                            {doneFollowizFollowers ? <div className="alert alert-success">Done</div> :<></>}
+        
                             </div>
                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
                         <div className="col col-lg-4">
                             <h1>Payto</h1>
                             {
@@ -929,6 +1000,11 @@ function Home() {
                                 className="btn btn-lg btn-primary"> {
                                 !errPayto && PaytoSubmitCheck ? <>Started</> : <>Start</>
                             }</button>
+
+<br />
+                            {errorPaytoFollowers ? <div className="alert alert-danger">{errorPaytoFollowersError}</div> :<></>}
+                            {donePaytoFollowers ? <div className="alert alert-success">Done</div> :<></>}
+        
                         </div>
                         <div className="col col-lg-4">
                             <h1>SMM</h1>
@@ -1041,6 +1117,9 @@ function Home() {
                                 className={"btn btn-lg btn-primary"}> {
                                 !errSMM && followizSubmitCheck ? <>Started</> : <>Start</>
                             }</button>
+                            <br />
+                            {errorSMMFollowers ? <div className="alert alert-danger">{errorSMMFollowersError}</div> :<></>}
+                            {doneSMMFollowers ? <div className="alert alert-success">Done</div> :<></>}
                         </div>
                     </div>
                 </div>

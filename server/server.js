@@ -30,854 +30,6 @@ mongoose.connect(db, () => {
     console.log("DB is connected");
 });
 
-// app.post("/api/scrape", async (req, responser) => {
-// let followizFollowersArray = [];
-// let followizLikesArray = [];
-// let followizCommentsArray = [];
-
-// let paytoFollowersArray = [];
-// let paytoLikesArray = [];
-// let paytoCommentsArray = [];
-
-// let SMMFollowersArray = [];
-// let SMMLikesArray = [];
-// let SMMCommentsArray = [];
-
-// const options = new chrome.Options();
-// options.addArguments("--disable-dev-shm-usage");
-// options.addArguments("--no-sandbox");
-// options.addArguments("--headless");
-
-// const driverT = new Builder()
-//     .forBrowser("chrome")
-//     .setChromeOptions(options)
-//     .build();
-
-// // const driverIndianSmart = new Builder()
-// // .forBrowser("chrome")
-// // .setChromeOptions(options)
-// // .build();
-
-// const driverSMMT = new Builder()
-//     .forBrowser("chrome")
-//     .setChromeOptions(options)
-//     .build();
-
-// const driverPaytoT = new Builder()
-//     .forBrowser("chrome")
-//     .setChromeOptions(options)
-//     .build();
-
-// driverT
-//     .manage()
-//     .window()
-//     .maximize();
-
-// // login followiz
-// driverT
-//     .get("https://followiz.com/")
-//     .then(() => {
-//       setTimeout(() => {
-//         driverT
-//         .findElement(By.name("LoginForm[username]"))
-//         .sendKeys("oceanooi")
-//         .then(() => {
-//           driverT
-//             .findElement(By.name("LoginForm[password]"))
-//             .sendKeys("ooi0314475")
-//             .then(() => {
-//               driverT
-//                 .findElement(By.css(".btn:nth-child(1)"))
-//                 .click()
-//                 .then(() => {
-//                   setTimeout(() => {
-//                     driverT
-//                     setTimeout(() => {
-//                       driverT
-//                         .get("https://bing.com/")
-//                         .then(() => {
-//                           driverT
-//                             .get("http://followiz.com")
-//                             .then(() => {
-//                               driverT
-//                                 .findElement(
-//                                   By.css("#orderform-category")
-//                                 )
-//                                 .sendKeys(
-//                                   "Instagram - Followers [Not Guaranteed/No Refill]"
-//                                 )
-//                                 .then(() => {
-//                                   setTimeout(async () => {
-//                                     let html = await driverT.getPageSource().catch(err => console.log('page source code getter'));
-
-//                                     const dom = new JSDOM(html);
-//                                     const document = dom.window.document;
-//                                     let ddl = await document.getElementById(
-//                                       "orderform-service"
-// )
-//                                     // console.log(ddl);
-
-//                                     for (
-//                                       i = 0;
-//                                       i < ddl.options.length;
-//                                       i++
-//                                     ) {
-//                                       // console.log(ddl.options[i]);
-//                                       followizFollowersArray[i] =
-//                                         ddl.options[i].text;
-//                                     }
-//                                     console.log(followizFollowersArray)
-
-
-//                                     driverT
-//                                     .findElement(
-//                                       By.css("#orderform-category")
-//                                     )
-//                                     .sendKeys("Instagram - Likes")
-//                                     .then(() => {
-//                                       setTimeout(async () => {
-//                                         let html = await driverT.getPageSource().catch(err => console.log('err getting page source code'));
-//                                         const dom = new JSDOM(html);
-//                                         const document =
-//                                           dom.window.document;
-//                                         let ddl = await document.getElementById(
-//                                           "orderform-service"
-// )
-//                                         for (
-//                                           i = 0;
-//                                           i < ddl.options.length;
-//                                           i++
-//                                         ) {
-//                                           followizLikesArray[i] =
-//                                             ddl.options[i].text;
-//                                         }
-//                                         console.log(followizLikesArray);
-
-
-//                                         driverT
-//                                         .findElement(
-//                                           By.css("#orderform-category")
-//                                         )
-//                                         .sendKeys("Instagram - Comments")
-//                                         .then(() => {
-//                                           setTimeout(async () => {
-//                                             let html = await driverT.getPageSource().catch(err => console.log('err getting page source code comments'));
-//                                             const dom = new JSDOM(html);
-//                                             const document =
-//                                               dom.window.document;
-//                                             let ddl = await document.getElementById(
-//                                               "orderform-service"
-// )
-//                                             for (
-//                                               i = 0;
-//                                               i < ddl.options.length;
-//                                               i++
-//                                             ) {
-//                                               followizCommentsArray[i] =
-//                                                 ddl.options[i].text;
-//                                             }
-//                                             console.log(followizCommentsArray);
-
-
-//                                             setTimeout(() => {
-//                                               driverT.quit();
-
-//                                             }, 30000);
-
-
-//                                           }, 2000);
-//                                         })
-//                                         .catch(err => console.log(err));
-
-
-//                                       }, 2000);
-//                                     })
-//                                     .catch(err => console.log(err));
-//                                   }, 2000);
-
-
-//                                 })
-//                                 .catch(err =>
-//                                   console.log("err is here not below")
-//                                 );
-//                             })
-//                             .catch(err =>
-//                               console.log(
-//                                 "error sleeping below second get"
-//                               )
-//                             );
-//                   }).catch(err => console.log(err))
-
-//                     }, 1000);
-
-//                   }, 2000)
-
-//                 })
-//                 .catch(err => console.log(err));
-//             })
-//             .catch(err => console.log(err));
-//         })
-//         .catch(err => console.log("here start men"));
-//     })
-//       }, 3000)
-
-//     .catch(err => console.log(err));
-
-// // driverIndianSmart
-// // .manage()
-// // .window()
-// // .maximize();
-
-// driverSMMT
-//     .manage()
-//     .window()
-//     .maximize();
-
-// //login smm
-// driverSMMT
-//     .get("https://smmfollows.com/")
-//     .then(() => {
-//       driverSMMT
-//         .findElement(By.name("LoginForm[username]"))
-//         .sendKeys("oceanooi")
-//         .then(() => {
-//           driverSMMT
-//             .findElement(By.name("LoginForm[password]"))
-//             .sendKeys("ooi0314475")
-//             .then(() => {
-//               driverSMMT
-//                 .findElement(By.css(".btn-primary"))
-//                 .click()
-//                 .then(() => {
-
-
-//                           setTimeout(() => {
-
-
-//                                     driverSMMT
-//                                       .findElement(
-//                                         By.css("#orderform-category")
-//                                       )
-//                                       .sendKeys(
-//                                         "Instagram Followers No Refill"
-//                                       )
-//                                       .then(() => {
-//                                         setTimeout(async () => {
-//                                           let html = await driverSMMT.getPageSource().catch(err => console.log('error in page source code fetching'));
-
-//                                           const dom = new JSDOM(html);
-//                                           const document = dom.window.document;
-//                                           let ddl = await document.getElementById(
-//                                             "orderform-service"
-// )
-
-//                                           for (
-//                                             i = 0;
-//                                             i < ddl.options.length;
-//                                             i++
-//                                           ) {
-//                                             SMMFollowersArray[i] =
-//                                               ddl.options[i].text;
-//                                           }
-//                                           console.log(SMMFollowersArray)
-
-//                                           driverSMMT
-//                                           .findElement(
-//                                             By.css("#orderform-category")
-//                                           )
-//                                           .sendKeys("Instagram Likes")
-//                                           .then(() => {
-//                                             setTimeout(async () => {
-//                                               let html = await driverSMMT.getPageSource() .catch(err => console.log('err getting page source code'));
-//                                               const dom = new JSDOM(html);
-//                                               const document =
-//                                                 dom.window.document;
-//                                               let ddl = await document.getElementById(
-//                                                 "orderform-service"
-// )
-//                                               for (
-//                                                 i = 0;
-//                                                 i < ddl.options.length;
-//                                                 i++
-//                                               ) {
-//                                                 SMMLikesArray[i] =
-//                                                   ddl.options[i].text;
-//                                               }
-//                                               console.log(SMMLikesArray);
-
-
-//                                               driverSMMT
-//                                               .findElement(
-//                                                 By.css("#orderform-category")
-//                                               )
-//                                               .sendKeys("Instagram Comments Worldwide")
-//                                               .then(() => {
-//                                                 setTimeout(async () => {
-//                                                   let html = await driverSMMT.getPageSource().catch(err => console.log('getting page source code error'));
-//                                                   const dom = new JSDOM(html);
-//                                                   const document =
-//                                                     dom.window.document;
-//                                                   let ddl = await document.getElementById(
-//                                                     "orderform-service"
-// )
-//                                                   for (
-//                                                     i = 0;
-//                                                     i < ddl.options.length;
-//                                                     i++
-//                                                   ) {
-//                                                     SMMCommentsArray[i] =
-//                                                       ddl.options[i].text;
-//                                                   }
-//                                                   console.log(SMMCommentsArray);
-//                                                   setTimeout(() => {
-//                                                     driverSMMT.quit();
-
-//                                                   }, 30000)
-//                                                 }, 2000);
-//                                               })
-//                                               .catch(err => console.log(err));
-
-
-//                                             }, 2000);
-//                                           })
-//                                           .catch(err => console.log(err));
-//                                         }, 2000);
-
-
-//                                       })
-//                                       .catch(err =>
-//                                         console.log("err is here not below")
-//                                       );
-
-
-//                           }, 1000);
-
-
-//                 })
-//                 .catch(err => console.log(err))
-//             })
-//             .catch(err => console.log(err));
-//         })
-//         .catch(err => console.log("here start men"));
-//     })
-//     .catch(err => console.log(err));
-
-
-// driverPaytoT
-//     .manage()
-//     .window()
-//     .maximize();
-
-// //payto signin
-
-// setTimeout(() => {
-// const obj = {
-//     followizFollowersArray,
-//     followizLikesArray,
-//     followizCommentsArray,
-//     paytoCommentsArray,
-//     paytoLikesArray,
-//     paytoFollowersArray,
-//     SMMCommentsArray,
-//     SMMFollowersArray,
-//     SMMLikesArray
-// }
-// responser.send(obj);
-// }, 50000)
-
-
-// });
-
-// app.post("/api/start", async (req, res) => {
-// console.log(req.body)
-// const followers = req.body.followers;
-// let teamMembers = [];
-// let comments = [];
-
-
-// /////////////////////////////////////////FOLLOWERS BLOCK////////////////////////////////////////
-
-// followiz followers
-// function followersFollowiz(url) {
-// driver
-//     .get("https://followiz.com/")
-//     .then(() => {
-//       driver
-//         .findElement(By.css("#orderform-category"))
-//         .sendKeys("Instagram - Followers [Not Guaranteed/No Refill]");
-//       driver.sleep(5000);
-
-
-//         driver
-//           .findElement(By.css("#orderform-service"))
-//           .sendKeys(req.body.followiz.followers);
-
-//       driver
-//         .findElement(By.css("#field-orderform-fields-link"))
-//         .sendKeys(url);
-//       driver
-//         .findElement(By.css("#field-orderform-fields-quantity"))
-//         .sendKeys(followers.followersFollowiz)
-//         .then(() => {
-//           driver
-//             .sleep(8000)
-//             .then(() => {
-//               // likesFollowiz(teamMembers[0]);
-//             })
-//             .catch(err => console.log(err));
-//         })
-//         .catch(err => console.log(err));
-
-//       // driver.findElement(By.css(".btn-blue")).click();
-//     })
-//     .catch(err => console.log("here not start men"));
-// }
-
-// // payto followers
-// function followersPayto(url) {
-// driverPayto.get("https://paytosmm.com/").then(() => {
-//     driver.sleep(2000);
-//     driverPayto
-//       .findElement(By.css("#orderform-category"))
-//       .sendKeys("➡️Instagram Followers (No Refill)");
-//     driver.sleep(2000);
-
-//       driverPayto
-//         .findElement(By.css("#orderform-service"))
-//         .sendKeys(
-//           req.body.payto.followers
-//         );
-
-//     driverPayto.sleep(8000);
-
-//     driverPayto
-//       .findElement(By.css("#field-orderform-fields-link"))
-//       .sendKeys(url);
-//     driverPayto
-//       .findElement(By.css("#field-orderform-fields-quantity"))
-//       .sendKeys(followers.followersPayto);
-// });
-
-// driverPayto.findElement(By.css(".btn-primary")).click();
-// }
-// // smm followers
-// function followersSMM(url) {
-// driverSMMfollowers.get("https://smmfollows.com/").then(() => {
-//     driverSMMfollowers
-//       .findElement(By.css("#orderform-category"))
-//       .sendKeys("Instagram Followers No Refill");
-//     driver.sleep(3000);
-
-//       driverSMMfollowers
-//         .findElement(By.css("#orderform-service"))
-//           req.body.SMM.followers
-//           .sendKeys();
-
-//     driverSMMfollowers.sleep(8000);
-
-//     driverSMMfollowers
-//       .findElement(By.css("#field-orderform-fields-link"))
-//       .sendKeys(url);
-//     driverSMMfollowers
-//       .findElement(By.css("#field-orderform-fields-quantity"))
-//       .sendKeys(followers.followersSMM);
-// });
-// driverSMMfollowers.findElement(By.css(".btn-primary")).click();
-
-// driverSMMfollowers.sleep(5000);
-// }
-// // followiz indianSmart
-// function followersIndianSmart(url) {
-// driverIndianSmart.get("https://indiansmartpanel.com/").then(() => {
-//     driverIndianSmart.sleep(8000);
-//     driverIndianSmart.findElement(By.css("#username")).sendKeys("oceanooi");
-//     driverIndianSmart.findElement(By.css("#password")).sendKeys("ooi0314475");
-//     driverIndianSmart
-//       .findElement(By.css(".cuteBtn:nth-child(6)"))
-//       .click()
-//       .then(() => {
-//         setTimeout(() => {
-//           driverIndianSmart
-//             .findElement(By.xpath("/html/body/div[3]/div/div[3]/button[1]"))
-//             .click();
-//           driverIndianSmart.sleep(8000);
-//           driverIndianSmart
-//             .findElement(By.xpath("/html/body/div[3]/div/div[3]/button[1]"))
-//             .click();
-//           driverIndianSmart.sleep(8000);
-//           driverIndianSmart
-//             .findElement(By.xpath("/html/body/div[3]/div/div[3]/button[1]"))
-//             .click();
-//           driverIndianSmart.sleep(8000);
-//           driverIndianSmart
-//             .findElement(By.xpath("/html/body/div[3]/div/div[3]/button[1]"))
-//             .click();
-//           driverIndianSmart.sleep(8000);
-//           driverIndianSmart
-//             .findElement(By.xpath("/html/body/div[3]/div/div[3]/button[1]"))
-//             .click();
-//           driverIndianSmart.sleep(8000);
-//         }, 4000);
-//       });
-// });
-// }
-
-// //////////////////////////////////FOLLOWERS BLOCK END//////////////////////////////////
-
-// ////////////////////////////////////LIKES BLOCK//////////////////////////////////////
-
-// likes followiz
-// function likesFollowiz(item) {
-//     let likes = parseInt(item.followers, 10);
-//     likes = (likes / 100) * 1.5;
-//     likes = Math.ceil(likes)
-
-//     let selectedComments = [];
-//     let size = comments.length;
-
-//     let randomnumber = Math.floor(Math.random() * (size - 5 + 1)) + 5;
-//     randomnumber--;
-
-//     for (let count = 0; count < randomnumber; count++) {
-//       let commentNumber = Math.floor(Math.random() * (size - 2 + 1)) + 3;
-//       commentNumber--;
-//       selectedComments.push(comments[commentNumber]);
-//     }
-
-//     driver
-//       .get("https://followiz.com/")
-//       .then(() => {
-//           driver
-//               .findElement(By.css("#orderform-category"))
-//               .sendKeys("Instagram - Likes")
-//               .then(() => {
-//                 setTimeout(() => {
-
-//                   driver
-//                   .findElement(By.css("#orderform-service"))
-//                   .sendKeys(req.body.followiz.likes);
-
-//                 driver
-//                   .findElement(By.css("#field-orderform-fields-link"))
-//                   .sendKeys(item.url);
-//                 if (likes < 20)
-//                   driver
-//                     .findElement(By.css("#field-orderform-fields-quantity"))
-//                     .sendKeys(20);
-//                 else
-//                   driver
-//                     .findElement(By.css("#field-orderform-fields-quantity"))
-//                     .sendKeys(likes);
-//                 driver.findElement(By.css(".btn-blue")).click().then(() => {
-//                   setTimeout(() => {
-//                     commentsFollowiz(item);
-//                   }, 2000)
-//                 }).catch(err => console.log(err));
-//                 }, 2000)
-
-//               })
-//               .catch(err => console.log(err));
-//       })
-//       .catch(err => console.log(err));
-// }
-// // payto likes
-// function likesPayto(item) {
-//     let likes = parseInt(item.followers, 10);
-//     likes = (likes / 100) * 1.5;
-//     likes = Math.ceil(likes);
-
-//     driverPayto
-//       .get("https://paytosmm.com/")
-//       .then(() => {
-//         setTimeout(function() {
-//           driverPayto
-//             .findElement(By.css("#orderform-category"))
-//             .sendKeys("➡️Instagram Likes")
-//             .then(() => {
-//               driverPayto
-//                 .findElement(By.css("#orderform-service"))
-//                 .sendKeys(req.body.payto.likes);
-//             })
-//             .catch(err => console.log(err));
-
-//           driverPayto.sleep(8000);
-
-//           driverPayto
-//             .findElement(By.css("#field-orderform-fields-link"))
-//             .sendKeys(item.url);
-//           if (likes < 20)
-//             driverPayto
-//               .findElement(By.css("#field-orderform-fields-quantity"))
-//               .sendKeys(20);
-//           else
-//             driverPayto
-//               .findElement(By.css("#field-orderform-fields-quantity"))
-//               .sendKeys(likes);
-//           driverPayto.findElement(By.css(".btn-primary")).click()
-//             .then(() => {
-//               setTimeout(() => {
-//                 commentsPayto(item);
-//               }, 2000)
-//             })
-//             .catch(err => console.log(err));
-//         }, 5000);
-//       })
-//       .catch(err => console.log(err));
-// }
-// // smm likes
-// function likesSMM(item) {
-//     let likes = parseInt(item.followers, 10);
-//     Math.ceil(likes);
-//     console.log(likes);
-//     likes = (likes / 100) * 1.5;
-//     likes = Math.ceil(likes);
-//     console.log(likes);
-//     driverSMMfollowers
-//       .get("https://smmfollows.com/")
-//       .then(() => {
-//         driverSMMfollowers.sleep(3000);
-
-//         driverSMMfollowers
-//           .findElement(By.css("#orderform-category"))
-//           .sendKeys("Instagram Likes");
-
-//         // if(followers <= 18000)
-//         // driverSMMfollowers
-//         // .findElement(By.css("#orderform-service"))
-//         // .sendKeys("New Instagram Likes [50k] [FAST] — $0.30 per 1000");
-//         // else
-//         driverSMMfollowers
-//           .findElement(By.css("#orderform-service"))
-//           .sendKeys(req.body.SMM.likes);
-
-//         driverSMMfollowers
-//           .findElement(By.css("#field-orderform-fields-link"))
-//           .sendKeys(item.url);
-//         if (likes < 20)
-//           driverSMMfollowers
-//             .findElement(By.css("#field-orderform-fields-quantity"))
-//             .sendKeys(20);
-//         else
-//           driverSMMfollowers
-//             .findElement(By.css("#field-orderform-fields-quantity"))
-//             .sendKeys(likes);
-//         driverSMMfollowers
-//           .findElement(By.css(".btn-primary"))
-//           .click()
-//           .then(() => {
-//             setTimeout(() => {
-//               commentsSMM(item);
-//             }, 2000);
-//           })
-//           .catch(err => console.log(err));
-//       })
-//       .catch(err => console.log(err));
-// }
-
-// // ////////////////////////////////////LIKES BLOCK END//////////////////////////////////////
-
-// // ////////////////////////////////////Comments BLOCK//////////////////////////////////////
-
-// axios.get("http://193.46.199.129:5000/api/comments").then(res => {
-//     comments = res.data;
-
-//     // delay function
-
-
-//     // for tickets
-
-// });
-
-// // comments followiz
-// function commentsFollowiz(item) {
-//     let selectedComments = [];
-//     let size = comments.length;
-
-//     let randomnumber = Math.floor(Math.random() * (size - 15 + 1)) + 5;
-//     randomnumber--;
-
-//     for (let count = 0; count < randomnumber; count++) {
-//       let commentNumber = Math.floor(Math.random() * (size - 2 + 1)) + 3;
-//       commentNumber--;
-//       selectedComments.push(comments[commentNumber]);
-//     }
-
-//     driver
-//       .get("https://followiz.com/")
-//       .then(() => {
-//         setTimeout(() => {
-
-//           driver.sleep(8000);
-
-//           driver
-//             .findElement(By.css("#orderform-category"))
-//             .sendKeys("Instagram - Comments");
-//           driver.sleep(5000);
-
-//           driver
-//             .findElement(By.css("#orderform-service"))
-//             .sendKeys(req.body.followiz.comments);
-
-//           driver
-//             .findElement(By.css("#field-orderform-fields-link"))
-//             .sendKeys(item.url);
-//             const com = req.body.followiz.comments;
-
-//           if(com.includes('CUSTOM')){
-//           selectedComments.map(comments => {
-//             console.log(comments);
-//             driver
-//               .findElement(By.css("#field-orderform-fields-comment"))
-//               .sendKeys(comments.comment + "\n");
-//           });
-//           driver.findElement(By.css(".btn-blue")).click();
-
-//         } else {
-//           driver
-//           .findElement(By.css("#field-orderform-fields-quantity"))
-//           .sendKeys(randomnumber).then(() => {
-//           driver.findElement(By.css(".btn-blue")).click();
-
-//           });
-//         }
-//           // driver
-//           // .findElement(By.css("#field-orderform-fields-comment"))
-//           // .sendKeys(numOfComments);
-
-//         }, 5000);
-
-//         driver.sleep(8000);
-//       })
-//       .catch(err => console.log(err));
-// }
-// // payto comments
-// function commentsPayto(item) {
-//     let selectedComments = [];
-//     let size = comments.length;
-
-//     let randomnumber = Math.floor(Math.random() * (size - 15 + 1)) + 5;
-//     randomnumber--;
-
-//     for (let count = 0; count < randomnumber; count++) {
-//       let commentNumber = Math.floor(Math.random() * (size - 2 + 1)) + 3;
-//       commentNumber--;
-//       selectedComments.push(comments[commentNumber]);
-//     }
-
-//     driverPayto
-//       .get("https://paytosmm.com/")
-//       .then(() => {
-//         setTimeout(function() {
-//           driverPayto
-//             .findElement(By.css("#orderform-category"))
-//             .sendKeys("➡️Instagram Comments and Comment Likes");
-
-//           driverPayto
-//             .findElement(By.css("#orderform-service"))
-//             .sendKeys(req.body.payto.comments);
-//           driverPayto.sleep(8000);
-
-//           driverPayto
-//             .findElement(By.css("#field-orderform-fields-link"))
-//             .sendKeys(item.url);
-//             const com = req.body.payto.comments;
-
-
-//             if(com.includes('CUSTOM')){
-//               selectedComments.map(comments => {
-//                 console.log(comments);
-//                 driverPayto
-//                   .findElement(By.css("#field-orderform-fields-comment"))
-//                   .sendKeys(comments.comment + "\n");
-//               });
-//               driverPayto.findElement(By.css(".btn-blue")).click();
-
-//             } else {
-//               driverPayto
-//               .findElement(By.css("#field-orderform-fields-quantity"))
-//               .sendKeys(randomnumber).then(() => {
-//               driverPayto.findElement(By.css(".btn-primary")).click();
-
-//               });
-//             }
-
-//           // selectedComments.map(item => {
-//           //   driverPayto
-//           //     .findElement(By.css("#field-orderform-fields-comment"))
-//           //     .sendKeys(item.comment + "\n");
-//           // });
-
-//           // driverPayto.findElement(By.css(".btn-primary")).click();
-
-//           // driverPayto.sleep(5000);
-//         }, 10000);
-//       })
-//       .catch(err => console.log(err));
-// }
-// // smm comments
-// function commentsSMM(item) {
-//     let selectedComments = [];
-//     let size = comments.length;
-
-//     let randomnumber = Math.floor(Math.random() * (size - 15 + 1)) + 5;
-//     randomnumber--;
-
-//     for (let count = 0; count < randomnumber; count++) {
-//       let commentNumber = Math.floor(Math.random() * (size - 2 + 1)) + 3;
-//       commentNumber--;
-//       selectedComments.push(comments[commentNumber]);
-//     }
-
-//     driverSMMfollowers
-//       .get("https://smmfollows.com/")
-//       .then(() => {
-//         driverSMMfollowers.sleep(5000);
-//         setTimeout(function() {
-//           driverSMMfollowers
-//             .findElement(By.css("#orderform-category"))
-//             .sendKeys("Instagram Comments Worldwide");
-
-//           driverSMMfollowers
-//             .findElement(By.css("#orderform-service"))
-//             .sendKeys(req.body.SMM.comments);
-//           driverSMMfollowers.sleep(8000);
-
-//           driverSMMfollowers
-//             .findElement(By.css("#field-orderform-fields-link"))
-//             .sendKeys(item.url);
-//           const com = req.body.SMM.comments
-
-//             if(com.includes('CUSTOM')){
-//               selectedComments.map(comments => {
-//                 console.log(comments);
-//                 driverSMMfollowers
-//                   .findElement(By.css("#field-orderform-fields-comment"))
-//                   .sendKeys(comments.comment + "\n");
-//               });
-//               driverSMMfollowers.findElement(By.css(".btn-blue")).click();
-
-//             } else {
-//               driverSMMfollowers
-//               .findElement(By.css("#field-orderform-fields-quantity"))
-//               .sendKeys(randomnumber).then(() => {
-//               driverSMMfollowers.findElement(By.css(".btn-primary")).click();
-
-//               });
-//             }
-//           // selectedComments.map(item => {
-//           //   driverSMMfollowers
-//           //     .findElement(By.css("#field-orderform-fields-comment"))
-//           //     .sendKeys(item.comment + "\n");
-//           // });
-
-
-//           // driverSMMfollowers.sleep(5000);
-//         }, 18000);
-//       })
-//       .catch(err => console.log(err));
-// }
-
-// });
 
 
 app.post('/fetch', (req, res) => {
@@ -955,7 +107,7 @@ let orders = [];
 app.post('/followizfollowers', async (req, res) => {
     console.log(req.body);
     followizOrder = req.body;
-    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    await axios.get('http://localhost:5000/api/teammembers').then(response => {
         if (response.data) {
             response.data.map(async (item, index) => {
 
@@ -970,9 +122,10 @@ app.post('/followizfollowers', async (req, res) => {
 
                 }).then(resp => {
                     console.log(resp.data);
+                    
                     if (resp.data.order) 
                         orders.push(resp.data.order)
-
+                    res.json(resp.data);
 
                     
 
@@ -987,7 +140,7 @@ app.post('/followizfollowers', async (req, res) => {
 app.post('/paytofollowers', async (req, res) => {
     console.log(req.body);
     paytoOrder = req.body;
-    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    await axios.get('http://localhost:5000/api/teammembers').then(response => {
         if (response.data) {
             response.data.map(async (item, index) => {
 
@@ -1005,6 +158,7 @@ app.post('/paytofollowers', async (req, res) => {
                     if (resp.data.order) 
                         orders.push(resp.data.order)
 
+                        res.json(resp.data);
 
                     
 
@@ -1019,7 +173,7 @@ app.post('/paytofollowers', async (req, res) => {
 app.post('/smmfollowers', async (req, res) => {
     console.log(req.body);
     SMMOrder = req.body;
-    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    await axios.get('http://localhost:5000/api/teammembers').then(response => {
         if (response.data) {
             response.data.map(async (item, index) => {
 
@@ -1038,6 +192,7 @@ app.post('/smmfollowers', async (req, res) => {
                         orders.push(resp.data.order)
 
 
+                        res.json(resp.data);
                     
 
 
@@ -1054,8 +209,9 @@ app.post('/api/starter', (req, res) => {
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     };
+    console.log('somthing');
     // getting the array of teammembers
-    axios.get("http://193.46.199.129:5000/api/teammembers").then(async resp => {
+    axios.get("http://localhost:5000/api/teammembers").then(async resp => {
         teamMembers = await resp.data;
         let counter = 0;
 
@@ -1082,7 +238,7 @@ app.post('/api/starter', (req, res) => {
                 };
 
 
-                await axios.post(`http://193.46.199.129:5000/api/teammembers/${
+                await axios.post(`http://localhost:5000/api/teammembers/${
                     teamMembers[count]
                 }._id}/update`, obj).then(response => {
                     console.log('done');
@@ -1098,12 +254,12 @@ app.post('/api/starter', (req, res) => {
         // //////////////////automation here////////////////
 
 
-        let task = cron.schedule("0 * */3 * * *", () => {
+        let task = cron.schedule("0 */3 * * * *", () => {
             times++;
             let limitCounter = 0;
             console.log("running");
             let automationArray = [];
-            axios.get("http://193.46.199.129:5000/api/teammembers").then(async res => {
+            axios.get("http://localhost:5000/api/teammembers").then(async res => {
                 let check = false;
                 teamMembers = res.data;
                 for (let count = 0; count < teamMembers.length; count++) {
@@ -1128,7 +284,7 @@ app.post('/api/starter', (req, res) => {
                                     followers: result.user.edge_followed_by.count
                                 };
 
-                                await axios.post(`http://193.46.199.129:5000/api/teammembers/${
+                                await axios.post(`http://localhost:5000/api/teammembers/${
                                     teamMembers[count]._id
                                 }/update`, obj).then(() => console.log('done with updating')).catch(err => console.log(err));
                             }
@@ -1148,7 +304,7 @@ app.post('/api/starter', (req, res) => {
 
 
                 await sleep((teamMembers.length + 1) * 10000);
-                axios.get('http://193.46.199.129:5000/api/comments').then(async resp => {
+                axios.get('http://localhost:5000/api/comments').then(async resp => {
                     for (let count = 0; count < automationArray.length; count++) {
 
                         let comments = resp.data;
@@ -1184,7 +340,7 @@ app.post('/api/starter', (req, res) => {
                         let random9 = Math.floor(Math.random() * 10);
                         let random10 = Math.floor(Math.random() * 10);
                         let random11 = Math.floor(Math.random() * 10);
-
+                        let commentsCounter = Math.floor(Math.random() * 30) + 10;
                         console.log(automationArray[count]);
                         let likes = parseInt(automationArray[count].followers, 10);
                         likes = (likes / 100) * 2;
@@ -1195,8 +351,6 @@ app.post('/api/starter', (req, res) => {
 
 
                         console.log(likes);
-                        // console.log(paytoOrder);
-                        // console.log(SMMOrder);
 
                         await axios.post('https://followiz.com/api/v2', {
 
@@ -1223,7 +377,7 @@ app.post('/api/starter', (req, res) => {
                                 service: followizOrder.followizComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
                                 commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
-                                quantity: likes
+                                quantity: commentsCounter
 
                                 // comments:
 
@@ -1264,7 +418,7 @@ app.post('/api/starter', (req, res) => {
                                 service: paytoOrder.PaytoComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
                                 commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
-                                quantity: likes
+                                quantity: commentsCounter
 
                             }).then(resp => {
                                 if (resp.data.order) 
@@ -1306,7 +460,7 @@ app.post('/api/starter', (req, res) => {
                                 service: SMMOrder.SMMComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
                                 commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
-                                quantity: likes
+                                quantity: commentsCounter
 
                             }).then(resp => {
                                 if (resp.data.order) 
@@ -1537,103 +691,6 @@ app.post('/api/starter', (req, res) => {
 
 
                 }
-                // automationArray.map((order, index) => {
-                // console.log(order);
-                // // await axios.get('http://193.46.199.129:5000/api/teammembers')
-                // // .then(response => {
-                // //   if(response.data){
-                // //   response.data.map(async (item, index) => {
-
-                // //     console.log(item.url);
-                // //     await axios.post('https://followiz.com/api/v2', {
-
-                // //       key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
-                // //       action: "add",
-                // //       service: req.body.followizFollowers,
-                // //       link: item.url,
-                // //       quantity: req.body.followersFollowiz
-
-                // //   }).then(resp => {
-                // //     console.log(resp.data);
-                // //   })
-                // //   .catch(err => console.log(err))
-                // //   });
-                // //   }
-                // // }).catch(err => console.log(err));
-
-
-                // // await axios.get('http://193.46.199.129:5000/api/teammembers')
-                // // .then(response => {
-                // //   if(response.data){
-                // //   response.data.map(async (item, index) => {
-
-                // //     console.log(item.url);
-                // //     await axios.post('https://paytosmm.com/api/v2', {
-
-                // //       key: "b825403d29ef9f7b4e20389a37bfc17a",
-                // //       action: "add",
-                // //       service: req.body.PaytoFollowers,
-                // //       link: item.url,
-                // //       quantity: req.body.followersPayto
-
-                // //   }).then(resp => {
-                // //     console.log(resp.data);
-                // //   })
-                // //   .catch(err => console.log(err))
-                // //   });
-                // //   }
-                // // }).catch(err => console.log(err));
-
-
-                // // await axios.get('http://193.46.199.129:5000/api/teammembers')
-                // // .then(response => {
-                // //   if(response.data){
-                // //   response.data.map(async (item, index) => {
-
-                // //     console.log(item.url);
-                // //     await axios.post('https://smmfollows.com/api/v2', {
-
-                // //       key: "f009489187f3dce80207c2c5ee2d47fc",
-                // //       action: "add",
-                // //       service: req.body.SMMFollowers,
-                // //       link: item.url,
-                // //       quantity: req.body.followersSMM
-
-                // //   }).then(resp => {
-                // //     console.log(resp.data);
-                // //   })
-                // //   .catch(err => console.log(err))
-                // //   });
-                // //   }
-                // // }).catch(err => console.log(err));
-
-
-                // });
-
-
-                // sleep(10000 * teamMembers.length + 2000)
-                // .then(() => {
-                //     if (automationArray.length != 0) {
-                //       console.log("not empty");
-                //       let instance = 0;
-
-                //       function likesLoop() {
-                //         setTimeout(function() {
-                //           likesFollowiz(automationArray[instance]);
-                //           likesPayto(automationArray[instance]);
-                //           likesSMM(automationArray[instance]);
-                //           instance++;
-
-                //           if (instance < automationArray.length) {
-                //             likesLoop();
-                //           }
-                //         }, 30000);
-                //       }
-
-                //       likesLoop();
-                //     } else console.log("empty");
-                // })
-                // .catch(err => console.log("691 line men masla"));
             }).catch(err => console.log(err));
             if (times > 6) {
                 console.log('stopped');
