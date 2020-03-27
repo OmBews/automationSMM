@@ -473,9 +473,9 @@ function Home() {
 
     const StartingEngine = e => {
         e.preventDefault();
-        // if (followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null || followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null || followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null) 
-        //     setErr(true)
-        //  else {
+        if (followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null || followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null || followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null) 
+            setErr(true)
+         else {
 
             setErr(false);
             // const followiz = {
@@ -511,7 +511,7 @@ function Home() {
             }).catch(err => console.log(err));
             setLoadingGo(true);
 
-        // }
+        }
     };
 
     const handleFollowersFollowiz = e => {
