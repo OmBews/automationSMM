@@ -114,7 +114,7 @@ function Home() {
 
 
         });
-    }, [userStatus]);
+    }, []);
 
 
     function handleSubmitSMM() {
@@ -129,7 +129,7 @@ function Home() {
                 SMMFollowers,
                 SMMComments
             }
-            axios.post('http://localhost:5000/smmfollowers', obj).then(res => {
+            axios.post('http://193.46.199.129:5000/smmfollowers', obj).then(res => {
                 if(res.data.error){
                     setErrorSMMFollowers(true);
                     setErrorSMMFollowersError(res.data.error);
@@ -155,7 +155,7 @@ function Home() {
                 PaytoFollowers,
                 PaytoComments
             }
-            axios.post('http://localhost:5000/paytofollowers', obj).then(res => {
+            axios.post('http://193.46.199.129:5000/paytofollowers', obj).then(res => {
                 if(res.data.order){
                     setErrorPaytoFollowers(false);
                     setDonePaytoFollowers(true);
@@ -181,7 +181,7 @@ function Home() {
             }
             console.log(obj);
 
-            axios.post('http://localhost:5000/followizfollowers', obj).then(res => {
+            axios.post('http://193.46.199.129:5000/followizfollowers', obj).then(res => {
             if(res.data.order)
             {   
                 setErrorFollowizFollowers(false);
@@ -204,7 +204,7 @@ function Home() {
         let tempArrayPayto = [];
         let tempArraySMM = [];
         let tempArrayIndianSmart = [];
-        axios.post('http://localhost:5000/fetch').then(res => {
+        axios.post('http://193.46.199.129:5000/fetch').then(res => {
             console.log(res.data)
 
             res.data.followizz.map((service, index) => {
@@ -382,19 +382,18 @@ function Home() {
     }
 
     async function fetch() {
-        await axios.get("http://localhost:5000/api/teammembers").then(res => {
+        await axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
             setTeammembers(res.data);
-            console.log(res);
-            console.log("team" + res.data);
+            console.log(res.data);
         }).catch(err => console.log(err));
 
-        await axios.get("http://localhost:5000/api/comments").then(res => {
+        await axios.get("http://193.46.199.129:5000/api/comments").then(res => {
             setComments(res.data);
         }).catch(err => console.log(err));
     }
 
     async function initFetch() {
-        await axios.post('http://localhost:5000/api/scrape').then(res => {
+        await axios.post('http://193.46.199.129:5000/api/scrape').then(res => {
             setInitialFetch(res.data)
         }).catch(err => console.log(err));
     }
@@ -419,11 +418,11 @@ function Home() {
         const obj = {
             url: url
         };
-        axios.post("http://localhost:5000/api/teammembers", obj).then(res => {
+        axios.post("http://193.46.199.129:5000/api/teammembers", obj).then(res => {
             setSuccessURL(true);
             setLoading(false);
 
-            axios.get("http://localhost:5000/api/teammembers").then(res => {
+            axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
                 setTeammembers(res.data);
                 console.log("team" + res.data);
             }).catch(err => console.log(err));
@@ -440,10 +439,10 @@ function Home() {
         const obj = {
             comment: comment
         };
-        axios.post("http://localhost:5000/api/comments", obj).then(res => {
+        axios.post("http://193.46.199.129:5000/api/comments", obj).then(res => {
             setSuccessComment(true);
             setLoadingComment(false);
-            axios.get("http://localhost:5000/api/comments").then(res => {
+            axios.get("http://193.46.199.129:5000/api/comments").then(res => {
                 setComments(res.data);
             }).catch(err => console.log(err));
         }).catch(err => {
@@ -453,20 +452,20 @@ function Home() {
     };
 
     const handleDeleteComment = item => {
-        axios.post(`http://localhost:5000/api/comments/${
+        axios.post(`http://193.46.199.129:5000/api/comments/${
             item._id
         }`).then(() => {
-            axios.get("http://localhost:5000/api/comments").then(res => {
+            axios.get("http://193.46.199.129:5000/api/comments").then(res => {
                 setComments(res.data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
     };
 
     const handleDeleteMember = item => {
-        axios.post(`http://localhost:5000/api/teammembers/${
+        axios.post(`http://193.46.199.129:5000/api/teammembers/${
             item._id
         }`).then(() => {
-            axios.get("http://localhost:5000/api/teammembers").then(res => {
+            axios.get("http://193.46.199.129:5000/api/teammembers").then(res => {
                 setTeammembers(res.data);
             }).catch(err => console.log(err));
         }).catch(err => console.log(err));
@@ -474,9 +473,9 @@ function Home() {
 
     const StartingEngine = e => {
         e.preventDefault();
-        if (followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null || followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null || followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null) 
-            setErr(true)
-         else {
+        // if (followersSMM == 0 || SMMLikes == null || SMMFollowers == null || SMMComments == null || followersPayto == 0 || PaytoLikes == null || PaytoFollowers == null || PaytoComments == null || followersFollowiz == 0 || followizLikes == null || followizFollowers == null || followizComments == null) 
+        //     setErr(true)
+        //  else {
 
             setErr(false);
             // const followiz = {
@@ -507,12 +506,12 @@ function Home() {
             // payto,
             // SMM
             // };
-            axios.post("http://localhost:5000/api/starter").then(res => {
+            axios.post("http://193.46.199.129:5000/api/starter").then(res => {
                 console.log(res.data)
             }).catch(err => console.log(err));
             setLoadingGo(true);
 
-        }
+        // }
     };
 
     const handleFollowersFollowiz = e => {

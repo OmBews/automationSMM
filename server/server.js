@@ -107,99 +107,100 @@ let orders = [];
 app.post('/followizfollowers', async (req, res) => {
     console.log(req.body);
     followizOrder = req.body;
-    await axios.get('http://localhost:5000/api/teammembers').then(response => {
-        if (response.data) {
-            response.data.map(async (item, index) => {
+    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    //     if (response.data) {
+    //         response.data.map(async (item, index) => {
 
-                console.log(item.url);
-                await axios.post('https://followiz.com/api/v2', {
+    //             console.log(item.url);
+    //             await axios.post('https://followiz.com/api/v2', {
 
-                    key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
-                    action: "add",
-                    service: req.body.followizFollowers,
-                    link: item.url,
-                    quantity: req.body.followersFollowiz
+    //                 key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
+    //                 action: "add",
+    //                 service: req.body.followizFollowers,
+    //                 link: item.url,
+    //                 quantity: req.body.followersFollowiz
 
-                }).then(resp => {
-                    console.log(resp.data);
+    //             }).then(resp => {
+    //                 console.log(resp.data);
                     
-                    if (resp.data.order) 
-                        orders.push(resp.data.order)
-                    res.json(resp.data);
+    //                 if (resp.data.order) 
+    //                     orders.push(resp.data.order)
+    //                 res.json(resp.data);
 
                     
 
 
-                }).catch(err => console.log(err))
-            });
-        }
-    }).catch(err => console.log(err));
+    //             }).catch(err => console.log(err))
+    //         });
+    //     }
+    // }).catch(err => console.log(err));
 
 });
 
 app.post('/paytofollowers', async (req, res) => {
     console.log(req.body);
     paytoOrder = req.body;
-    await axios.get('http://localhost:5000/api/teammembers').then(response => {
-        if (response.data) {
-            response.data.map(async (item, index) => {
+    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    //     if (response.data) {
+    //         response.data.map(async (item, index) => {
 
-                console.log(item.url);
-                await axios.post('https://paytosmm.com/api/v2', {
+    //             console.log(item.url);
+    //             await axios.post('https://paytosmm.com/api/v2', {
 
-                    key: "b825403d29ef9f7b4e20389a37bfc17a",
-                    action: "add",
-                    service: req.body.PaytoFollowers,
-                    link: item.url,
-                    quantity: req.body.followersPayto
+    //                 key: "b825403d29ef9f7b4e20389a37bfc17a",
+    //                 action: "add",
+    //                 service: req.body.PaytoFollowers,
+    //                 link: item.url,
+    //                 quantity: req.body.followersPayto
 
-                }).then(resp => {
-                    console.log(resp.data);
-                    if (resp.data.order) 
-                        orders.push(resp.data.order)
+    //             }).then(resp => {
+    //                 console.log(resp.data);
+    //                 if (resp.data.order) 
+    //                     orders.push(resp.data.order)
 
-                        res.json(resp.data);
+    //                     res.json(resp.data);
 
                     
 
 
-                }).catch(err => console.log(err))
-            });
-        }
-    }).catch(err => console.log(err));
+    //             }).catch(err => console.log(err))
+    //         });
+    //     }
+    // }).catch(err => console.log(err));
 
 });
 
 app.post('/smmfollowers', async (req, res) => {
     console.log(req.body);
     SMMOrder = req.body;
-    await axios.get('http://localhost:5000/api/teammembers').then(response => {
-        if (response.data) {
-            response.data.map(async (item, index) => {
 
-                console.log(item.url);
-                await axios.post('https://smmfollows.com/api/v2', {
+    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+    //     if (response.data) {
+    //         response.data.map(async (item, index) => {
 
-                    key: "f009489187f3dce80207c2c5ee2d47fc",
-                    action: "add",
-                    service: req.body.SMMFollowers,
-                    link: item.url,
-                    quantity: req.body.followersSMM
+    //             console.log(item.url);
+    //             await axios.post('https://smmfollows.com/api/v2', {
 
-                }).then(resp => {
-                    console.log(resp.data);
-                    if (resp.data.order) 
-                        orders.push(resp.data.order)
+    //                 key: "f009489187f3dce80207c2c5ee2d47fc",
+    //                 action: "add",
+    //                 service: req.body.SMMFollowers,
+    //                 link: item.url,
+    //                 quantity: req.body.followersSMM
+
+    //             }).then(resp => {
+    //                 console.log(resp.data);
+    //                 if (resp.data.order) 
+    //                     orders.push(resp.data.order)
 
 
-                        res.json(resp.data);
+    //                     res.json(resp.data);
                     
 
 
-                }).catch(err => console.log(err))
-            });
-        }
-    }).catch(err => console.log(err));
+    //             }).catch(err => console.log(err))
+    //         });
+    //     }
+    // }).catch(err => console.log(err));
 
 });
 
@@ -209,9 +210,8 @@ app.post('/api/starter', (req, res) => {
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     };
-    console.log('somthing');
     // getting the array of teammembers
-    axios.get("http://localhost:5000/api/teammembers").then(async resp => {
+    axios.get("http://193.46.199.129:5000/api/teammembers").then(async resp => {
         teamMembers = await resp.data;
         let counter = 0;
 
@@ -221,27 +221,32 @@ app.post('/api/starter', (req, res) => {
             await sleep(10000);
 
             ig.scrapeUserPage(username).then(async result => {
-                console.log(result.medias[0].thumbnail_resource)
-
+                console.log(result);
+                // console.log(result.medias[0].thumbnail_resource)
+                // for(let i=0; i<result.medias.length; i++){
+                //     console.log(result.medias[i].shortcode)
+                // }
+                
                 const first = result.medias[0].shortcode;
                 const second = result.medias[1].shortcode;
                 const third = result.medias[2].shortcode;
+                console.log(first);
                 const followersCount = result.user.edge_followed_by.count;
                 console.log("counr " + result.user.edge_followed_by.count);
 
                 const obj = {
-                    first,
-                    second,
-                    third,
+                    firstImage: first,
+                    secondImage: second,
+                    thirdImage: third,
                     followers: followersCount,
                     limitCounter: 0
                 };
-
-
-                await axios.post(`http://localhost:5000/api/teammembers/${
-                    teamMembers[count]
-                }._id}/update`, obj).then(response => {
-                    console.log('done');
+                console.log(obj);
+                await axios.post(`http://193.46.199.129:5000/api/teammembers/${
+                    teamMembers[count]._id
+                }/update`, obj).then(response => {
+                   console.log(response.data);
+                    
                 }).catch(Err => console.log("Err"))
 
 
@@ -254,12 +259,12 @@ app.post('/api/starter', (req, res) => {
         // //////////////////automation here////////////////
 
 
-        let task = cron.schedule("0 */3 * * * *", () => {
+        let task = cron.schedule("0 * */1 * * *", () => {
             times++;
             let limitCounter = 0;
             console.log("running");
             let automationArray = [];
-            axios.get("http://localhost:5000/api/teammembers").then(async res => {
+            axios.get("http://193.46.199.129:5000/api/teammembers").then(async res => {
                 let check = false;
                 teamMembers = res.data;
                 for (let count = 0; count < teamMembers.length; count++) {
@@ -267,35 +272,69 @@ app.post('/api/starter', (req, res) => {
                     await sleep(10000);
                     ig.scrapeUserPage(username).then(async result => {
                         console.log("scraping result length " + result.medias.length);
+                        console.log(result.medias[0].shortcode);
+                        console.log(teamMembers[count])
 
                         if (result.medias.length > 2 && teamMembers[count].limitCounter < 3) {
                             const first = result.medias[0].shortcode;
                             const second = result.medias[1].shortcode;
                             const third = result.medias[2].shortcode;
-
                             if (first != teamMembers[count].firstImage) {
                                 automationArray.push(teamMembers[count]);
                                 limitCounter++;
                                 const obj = {
-                                    first,
-                                    second,
-                                    third,
+                                    firstImage: first,
+                                    secondImage: second,
+                                    thirdImage: third,
                                     limitCounter,
                                     followers: result.user.edge_followed_by.count
                                 };
-
-                                await axios.post(`http://localhost:5000/api/teammembers/${
+                                await sleep(3000);
+                                await axios.post(`http://193.46.199.129:5000/api/teammembers/${
                                     teamMembers[count]._id
-                                }/update`, obj).then(() => console.log('done with updating')).catch(err => console.log(err));
+                                }/update`, obj).then( async (res) => {
+                                    console.log(res.data)
+                                    console.log('done with updating');
+                                    // console.log(result.medias[count].shortcode);
+                                    // await axios.get('http://193.46.199.129:5000/api/teammembers')
+                                    //     .then(async responser => {
+                                    //         teamMembers = responser.data;
+
+                                    // if(second != teamMembers[count].firstImage && second != teamMembers[count].secondImage && teamMembers[count].limitCounter < 3){
+                                    //     automationArray.push(teamMembers[count]);
+                                    //     limitCounter++;
+                                    //     const obj = {
+                                    //         firstImage,
+                                    //         secondImage,
+                                    //         thirdImage,
+                                    //         limitCounter,
+                                    //         followers: result.user.edge_followed_by.count
+                                    //     };
+        
+                                    //     await axios.post(`http://193.46.199.129:5000/api/teammembers/${
+                                    //         teamMembers[count]._id
+                                    //     }/update`, obj).then(() => console.log('done with updating again')).catch(err => console.log(err));
+                                    // }
+                                    //     }).catch(err => {
+                                    //         console.log(err);
+                                    //     })
+
+                                }
+                                
+                                ).catch(err => console.log(err));
                             }
-                            // if(second != teamMembers[count].firstImage && limitCounter < 3){
-                            // automationArray.push(teamMembers[count])
-                            // limitCounter++;
-                            // }
-                            // if(third != teamMembers[count].second && limitCounter < 3){
-                            // automationArray.push(teamMembers[count])
-                            // limitCounter++;
-                            // }
+                         
+                            
+                   
+
+                        //     // if(second != teamMembers[count].firstImage && limitCounter < 3){
+                        //     // automationArray.push(teamMembers[count])
+                        //     // limitCounter++;
+                        //     // }
+                        //     // if(third != teamMembers[count].second && limitCounter < 3){
+                        //     // automationArray.push(teamMembers[count])
+                        //     // limitCounter++;
+                        //     // }
 
                         }
                     });
@@ -304,7 +343,7 @@ app.post('/api/starter', (req, res) => {
 
 
                 await sleep((teamMembers.length + 1) * 10000);
-                axios.get('http://localhost:5000/api/comments').then(async resp => {
+                axios.get('http://193.46.199.129:5000/api/comments').then(async resp => {
                     for (let count = 0; count < automationArray.length; count++) {
 
                         let comments = resp.data;
@@ -341,7 +380,7 @@ app.post('/api/starter', (req, res) => {
                         let random10 = Math.floor(Math.random() * 10);
                         let random11 = Math.floor(Math.random() * 10);
                         let commentsCounter = Math.floor(Math.random() * 30) + 10;
-                        console.log(automationArray[count]);
+                        // console.log(automationArray[count]);
                         let likes = parseInt(automationArray[count].followers, 10);
                         likes = (likes / 100) * 2;
                         likes = Math.ceil(likes);
@@ -351,7 +390,9 @@ app.post('/api/starter', (req, res) => {
 
 
                         console.log(likes);
-
+                        let commentsSettler = temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2];
+                        let anotherCommentsString = commentsSettler.replace(/\n/g, "\\n");
+                        console.log(anotherCommentsString)
                         await axios.post('https://followiz.com/api/v2', {
 
                             key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
@@ -376,7 +417,7 @@ app.post('/api/starter', (req, res) => {
                                 action: "add",
                                 service: followizOrder.followizComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
-                                commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
+                                comments: commentsSettler,
                                 quantity: commentsCounter
 
                                 // comments:
@@ -417,7 +458,7 @@ app.post('/api/starter', (req, res) => {
                                 action: "add",
                                 service: paytoOrder.PaytoComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
-                                commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
+                                comments: commentsSettler,
                                 quantity: commentsCounter
 
                             }).then(resp => {
@@ -459,7 +500,7 @@ app.post('/api/starter', (req, res) => {
                                 action: "add",
                                 service: SMMOrder.SMMComments,
                                 link: automationArray[count].url + "/p/" + automationArray[count].firstImage,
-                                commments: temporaryArray[random11] + "\n" + temporaryArray[random10] + "\n" + temporaryArray[random1] + "\n" + temporaryArray[random9] + "\n" + temporaryArray[random8] + "\n" + temporaryArray[random7] + "\n" + temporaryArray[random6] + "\n" + temporaryArray[random5] + "\n" + temporaryArray[random4] + "\n" + temporaryArray[random3] + "\n" + temporaryArray[random2],
+                                comments: commentsSettler,
                                 quantity: commentsCounter
 
                             }).then(resp => {
