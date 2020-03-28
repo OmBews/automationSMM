@@ -182,6 +182,7 @@ function Home() {
             console.log(obj);
 
             axios.post('http://193.46.199.129:5000/followizfollowers', obj).then(res => {
+                console.log(res)
             if(res.data.order)
             {   
                 setErrorFollowizFollowers(false);

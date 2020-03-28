@@ -107,66 +107,66 @@ let orders = [];
 app.post('/followizfollowers', async (req, res) => {
     console.log(req.body);
     followizOrder = req.body;
-    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
-    //     if (response.data) {
-    //         response.data.map(async (item, index) => {
+    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+        if (response.data) {
+            response.data.map(async (item, index) => {
 
-    //             console.log(item.url);
-    //             await axios.post('https://followiz.com/api/v2', {
+                console.log(item.url);
+                await axios.post('https://followiz.com/api/v2', {
 
-    //                 key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
-    //                 action: "add",
-    //                 service: req.body.followizFollowers,
-    //                 link: item.url,
-    //                 quantity: req.body.followersFollowiz
+                    key: "14fa86ed817dd6ea7a8dd9e9cfbb8725",
+                    action: "add",
+                    service: req.body.followizFollowers,
+                    link: item.url,
+                    quantity: req.body.followersFollowiz
 
-    //             }).then(resp => {
-    //                 console.log(resp.data);
+                }).then(resp => {
+                    console.log(resp.data);
                     
-    //                 if (resp.data.order) 
-    //                     orders.push(resp.data.order)
-    //                 res.json(resp.data);
+                    if (resp.data.order) 
+                        orders.push(resp.data.order)
+                    res.json(resp.data);
 
                     
 
 
-    //             }).catch(err => console.log(err))
-    //         });
-    //     }
-    // }).catch(err => console.log(err));
+                }).catch(err => console.log(err))
+            });
+        }
+    }).catch(err => console.log(err));
 
 });
 
 app.post('/paytofollowers', async (req, res) => {
     console.log(req.body);
     paytoOrder = req.body;
-    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
-    //     if (response.data) {
-    //         response.data.map(async (item, index) => {
+    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+        if (response.data) {
+            response.data.map(async (item, index) => {
 
-    //             console.log(item.url);
-    //             await axios.post('https://paytosmm.com/api/v2', {
+                console.log(item.url);
+                await axios.post('https://paytosmm.com/api/v2', {
 
-    //                 key: "b825403d29ef9f7b4e20389a37bfc17a",
-    //                 action: "add",
-    //                 service: req.body.PaytoFollowers,
-    //                 link: item.url,
-    //                 quantity: req.body.followersPayto
+                    key: "b825403d29ef9f7b4e20389a37bfc17a",
+                    action: "add",
+                    service: req.body.PaytoFollowers,
+                    link: item.url,
+                    quantity: req.body.followersPayto
 
-    //             }).then(resp => {
-    //                 console.log(resp.data);
-    //                 if (resp.data.order) 
-    //                     orders.push(resp.data.order)
+                }).then(resp => {
+                    console.log(resp.data);
+                    if (resp.data.order) 
+                        orders.push(resp.data.order)
 
-    //                     res.json(resp.data);
+                        res.json(resp.data);
 
                     
 
 
-    //             }).catch(err => console.log(err))
-    //         });
-    //     }
-    // }).catch(err => console.log(err));
+                }).catch(err => console.log(err))
+            });
+        }
+    }).catch(err => console.log(err));
 
 });
 
@@ -174,33 +174,33 @@ app.post('/smmfollowers', async (req, res) => {
     console.log(req.body);
     SMMOrder = req.body;
 
-    // await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
-    //     if (response.data) {
-    //         response.data.map(async (item, index) => {
+    await axios.get('http://193.46.199.129:5000/api/teammembers').then(response => {
+        if (response.data) {
+            response.data.map(async (item, index) => {
 
-    //             console.log(item.url);
-    //             await axios.post('https://smmfollows.com/api/v2', {
+                console.log(item.url);
+                await axios.post('https://smmfollows.com/api/v2', {
 
-    //                 key: "f009489187f3dce80207c2c5ee2d47fc",
-    //                 action: "add",
-    //                 service: req.body.SMMFollowers,
-    //                 link: item.url,
-    //                 quantity: req.body.followersSMM
+                    key: "f009489187f3dce80207c2c5ee2d47fc",
+                    action: "add",
+                    service: req.body.SMMFollowers,
+                    link: item.url,
+                    quantity: req.body.followersSMM
 
-    //             }).then(resp => {
-    //                 console.log(resp.data);
-    //                 if (resp.data.order) 
-    //                     orders.push(resp.data.order)
+                }).then(resp => {
+                    console.log(resp.data);
+                    if (resp.data.order) 
+                        orders.push(resp.data.order)
 
 
-    //                     res.json(resp.data);
+                        res.json(resp.data);
                     
 
 
-    //             }).catch(err => console.log(err))
-    //         });
-    //     }
-    // }).catch(err => console.log(err));
+                }).catch(err => console.log(err))
+            });
+        }
+    }).catch(err => console.log(err));
 
 });
 
